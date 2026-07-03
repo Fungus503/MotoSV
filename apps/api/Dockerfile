@@ -1,12 +1,6 @@
 FROM node:20-alpine
 WORKDIR /app
-
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/api/ apps/api/
-COPY packages/ packages/
-
-RUN corepack enable && pnpm install --frozen-lockfile
-
+COPY . .
+RUN corepack enable && pnpm install --prod --frozen-lockfile --filter @motosv/api-server
 EXPOSE 3000
-
 CMD ["pnpm", "start"]
