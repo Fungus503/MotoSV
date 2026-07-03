@@ -7,15 +7,14 @@ FROM base AS prod-deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json apps/api/package.json
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile --filter @motosv/api-server
+RUN pnpm install --prod --frozen-lockfile --filter @motosv/api-server
 
 FROM base AS build
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json apps/api/package.json
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --filter @motosv/api-server
+RUN pnpm install --frozen-lockfile --filter @motosv/api-server
 COPY apps/api apps/api
-RUN pnpm --filter @motosv/api-server typecheck
 
 FROM base
 WORKDIR /app
