@@ -20,8 +20,10 @@ import { ridesRouter } from './routes/rides'
 
 const app = new Hono()
 
+const corsOrigin = env.CORS_ORIGIN === '*' ? '*' : env.CORS_ORIGIN.split(',').map((o) => o.trim())
+
 app.use('*', cors({
-  origin: '*',
+  origin: corsOrigin,
   allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization', 'apikey'],
   exposeHeaders: ['X-RateLimit-Limit', 'X-RateLimit-Remaining'],
@@ -50,6 +52,8 @@ app.use('/api/rides', rateLimit({ max: 30, windowMs: 60000 }))
 app.use('/api/rides/*/cancel', rateLimit({ max: 20, windowMs: 60000 }))
 app.use('/api/rides/*/start', rateLimit({ max: 30, windowMs: 60000 }))
 app.use('/api/rides/*/complete', rateLimit({ max: 30, windowMs: 60000 }))
+app.use('/api/webhooks/*', rateLimit({ max: 20, windowMs: 60000 }))
+app.use('/api/notifications/*', rateLimit({ max: 30, windowMs: 60000 }))
 
 async function main() {
   if (redis) {

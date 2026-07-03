@@ -18,11 +18,16 @@ const notifySchema = z.object({
 })
 
 notificationsRouter.post('/', async (c) => {
+  const user = c.get('user')
   const body = await c.req.json()
   const parsed = notifySchema.safeParse(body)
 
   if (!parsed.success) {
     return c.json({ error: 'Invalid input', details: parsed.error.flatten() }, 400)
+  }
+
+  if (parsed.data.user_id !== user.sub) {
+    return c.json({ error: 'You can only send notifications to yourself' }, 403)
   }
 
   try {

@@ -1,6 +1,7 @@
 import type { Context, Next } from 'hono'
 import { createRemoteJWKSet, jwtVerify } from 'jose'
 import { env } from '../config'
+import { logger } from '../lib/logger'
 
 const JWKS_URL = new URL(`${env.SUPABASE_URL}/auth/v1/.well-known/jwks.json`)
 const JWKS = createRemoteJWKSet(JWKS_URL)
@@ -22,6 +23,7 @@ export async function auth(c: Context, next: Next) {
   const authHeader = c.req.header('Authorization')
 
   if (!authHeader?.startsWith('Bearer ')) {
+    logger.warn({ path: c.req.path, ip: c.req.header('x-forwarded-for') }, 'Auth: missing token')
     return c.json({ error: 'Missing or invalid Authorization header' }, 401)
   }
 
@@ -41,6 +43,7 @@ export async function auth(c: Context, next: Next) {
 
     await next()
   } catch (err) {
+    logger.warn({ path: c.req.path }, 'Auth: invalid or expired token')
     return c.json({ error: 'Invalid or expired token' }, 401)
   }
 }
@@ -72,6 +75,7 @@ export function requireRole(...roles: string[]) {
   return async (c: Context, next: Next) => {
     const user = c.get('user')
     if (!user || !roles.includes(user.role)) {
+      logger.warn({ path: c.req.path, user: user?.sub }, 'Auth: forbidden')
       return c.json({ error: 'Forbidden' }, 403)
     }
     await next()

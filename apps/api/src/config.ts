@@ -13,6 +13,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     PAYPAL_WEBHOOK_ID: z.string().optional(),
     WOMPI_WEBHOOK_SECRET: z.string().optional(),
+    CORS_ORIGIN: z.string().default('*'),
   },
   runtimeEnv: process.env,
 })

@@ -24,13 +24,14 @@ paymentWebhooksRouter.post('/stripe', async (c) => {
 
 paymentWebhooksRouter.post('/paypal', async (c) => {
   const body = await c.req.text()
-  const headers = {
-    'paypal-transmission-sig': c.req.header('paypal-transmission-sig'),
-    'paypal-cert-url': c.req.header('paypal-cert-url'),
-    'paypal-auth-algo': c.req.header('paypal-auth-algo'),
-  }
 
-  if (!verifyPaypalSignature(headers)) {
+  const transmissionSig = c.req.header('paypal-transmission-sig')
+  const transmissionId = c.req.header('paypal-transmission-id')
+  const transmissionTime = c.req.header('paypal-transmission-time')
+  const certUrl = c.req.header('paypal-cert-url')
+  const authAlgo = c.req.header('paypal-auth-algo')
+
+  if (!verifyPaypalSignature(body, transmissionSig, transmissionId, transmissionTime, certUrl, authAlgo)) {
     logger.warn('Invalid PayPal webhook signature')
     return c.json({ error: 'Invalid signature' }, 401)
   }
