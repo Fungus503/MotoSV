@@ -12,6 +12,7 @@
     "test:run": "vitest run",
     "api:dev": "turbo run api:dev",
     "api:typecheck": "turbo run api:typecheck",
+    "start": "pnpm --filter @motosv/api-server start",
     "db:migrate": "supabase db push --linked",
     "db:types": "supabase gen types typescript --linked > packages/api/src/database.types.ts",
     "functions:deploy": "supabase functions deploy",
