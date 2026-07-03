@@ -1,0 +1,262 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Manage Addresses - MotoSV</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .safe-bottom {
+            padding-bottom: calc(env(safe-area-inset-bottom) + 32px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d6e4f9",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#00c853",
+                        "background": "#f7f9fc",
+                        "on-surface-variant": "#3c4a3c",
+                        "on-primary-fixed": "#002108",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#3a4859",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-bright": "#f7f9fc",
+                        "secondary-fixed-dim": "#bac8dc",
+                        "on-primary-fixed-variant": "#00531e",
+                        "surface": "#f7f9fc",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f2f4f7",
+                        "primary-fixed-dim": "#3ce36a",
+                        "surface-dim": "#d8dadd",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-primary-container": "#004c1b",
+                        "tertiary": "#006d35",
+                        "primary": "#006e2a",
+                        "tertiary-fixed": "#62ff96",
+                        "surface-tint": "#006e2a",
+                        "on-tertiary-container": "#004c22",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#00210b",
+                        "secondary": "#525f71",
+                        "surface-variant": "#e0e3e6",
+                        "surface-container-high": "#e6e8eb",
+                        "on-secondary-container": "#566475",
+                        "on-background": "#191c1e",
+                        "outline-variant": "#bbcbb8",
+                        "tertiary-fixed-dim": "#00e475",
+                        "primary-fixed": "#69ff87",
+                        "surface-container": "#eceef1",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#3ce36a",
+                        "tertiary-container": "#00c765",
+                        "secondary-container": "#d3e1f6",
+                        "on-secondary-fixed": "#0f1c2c",
+                        "outline": "#6c7b6a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "2xl": "48px",
+                        "edge-margin": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "lg": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm h-14 flex items-center justify-between px-edge-margin">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary active:scale-95 duration-200" data-icon="arrow_back">arrow_back</button>
+<h1 class="font-title-lg text-title-lg text-primary tracking-tight">Saved Addresses</h1>
+</div>
+<button class="material-symbols-outlined text-primary hover:bg-primary-container/20 p-2 rounded-full transition-colors active:scale-95" data-icon="notifications">notifications</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-32 px-edge-margin">
+<!-- Map Visualization Context (Small Glassmorphic Preview) -->
+<div class="relative w-full h-40 rounded-xl overflow-hidden mb-lg shadow-sm border border-outline-variant/20">
+<div class="absolute inset-0 bg-cover bg-center" data-location="San Salvador, El Salvador" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMVfNia5Fc7qmaQCrzsBH7zIIlVX7gf_kp4twwKomtXbhMSc6BraKkSsJJvhLm0VCusGHnL7zU-lYPP4S_da7FCAYbGKiLLc8xpevxlIoP-KJH3qSeQqrSkr9-lGCEk0ISHGZYgJ22taekUl8KSZQWmOFvBzzf7PFdlYR1KSKrzU0nkYvCmxTveZmj-64qsZrR-3DkGOZ4ynuOCh4XHhweRav4KABjsrQcrDq8cxmLRNuuhW6a6DEcQZ082gUL-EsDQxx7qMflJA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/40 to-transparent"></div>
+<div class="absolute bottom-3 left-3 glass-card px-3 py-2 rounded-lg border border-white/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="location_on">location_on</span>
+<span class="font-label-lg text-label-lg text-on-surface">View All on Map</span>
+</div>
+</div>
+<!-- Address List Section -->
+<div class="flex flex-col gap-md">
+<!-- Home Address Card -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/5 flex items-start gap-md group active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 rounded-full bg-primary-container/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="home">home</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Home</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error transition-colors text-[20px]" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Colonia Escalón, Calle El Mirador #4521, San Salvador</p>
+</div>
+</div>
+<!-- Work Address Card -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/5 flex items-start gap-md group active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="work">work</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Work</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error transition-colors text-[20px]" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">WTC San Salvador, Torre 2, Nivel 8, San Salvador</p>
+</div>
+</div>
+<!-- Gym Address Card -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/5 flex items-start gap-md group active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]" data-icon="fitness_center">fitness_center</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Gym</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error transition-colors text-[20px]" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Multiplaza, Nivel 3, Antiguo Cuscatlán</p>
+</div>
+</div>
+<!-- Place / Other -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/5 flex items-start gap-md group active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]" data-icon="place">place</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Mom's House</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error transition-colors text-[20px]" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Residencial Santa Elena, Pasaje 3 #12, Antiguo Cuscatlán</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Add New Address Button (FAB style or Bottom Bar) -->
+<div class="fixed bottom-20 left-0 w-full px-edge-margin z-40 pointer-events-none">
+<button class="pointer-events-auto w-full h-[56px] bg-primary-container text-on-primary-container font-headline-lg-mobile text-headline-lg-mobile rounded-xl shadow-xl flex items-center justify-center gap-2 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            Add new address
+        </button>
+</div>
+<!-- BottomNavBar (Filtered based on Top Level Destination) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-2 pb-8 px-4 bg-surface/85 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] z-50 rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="motorcycle">motorcycle</span>
+<span class="font-label-lg-mobile text-label-lg-mobile">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-lg-mobile text-label-lg-mobile">Activity</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-lg-mobile text-label-lg-mobile">Wallet</span>
+</div>
+<!-- Profile is Active as we are in a sub-setting of User Profile -->
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-lg-mobile text-label-lg-mobile">Profile</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for list item removal (visual only)
+        document.querySelectorAll('[data-icon="delete"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('div.bg-surface-container-lowest');
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            });
+        });
+
+        // Ripples or basic button haptics simulation
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', () => {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(10);
+                }
+            });
+        });
+    </script>
+</body></html>

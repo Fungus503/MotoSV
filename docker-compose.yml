@@ -1,0 +1,32 @@
+services:
+  supabase:
+    image: supabase/supabase-local:v2
+    ports:
+      - "54321:54321"
+      - "54322:54322"
+      - "54323:54323"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PROJECT_REF: local
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL:-https://guwddvudyyxtbbxjzqbx.supabase.co}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: ${NODE_ENV:-development}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      - redis
+    restart: unless-stopped

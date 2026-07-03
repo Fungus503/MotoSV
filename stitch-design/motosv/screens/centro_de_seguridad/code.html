@@ -1,0 +1,291 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Centro de Seguridad - MotoSV</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e6",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#004c1b",
+                    "secondary-fixed": "#d6e4f9",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "surface": "#f7f9fc",
+                    "surface-container": "#eceef1",
+                    "secondary-container": "#d3e1f6",
+                    "on-secondary-container": "#566475",
+                    "tertiary": "#006d35",
+                    "tertiary-fixed": "#62ff96",
+                    "outline": "#6c7b6a",
+                    "on-tertiary-container": "#004c22",
+                    "surface-bright": "#f7f9fc",
+                    "on-surface": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006e2a",
+                    "outline-variant": "#bbcbb8",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "on-primary-fixed": "#002108",
+                    "primary-container": "#00c853",
+                    "inverse-surface": "#2d3133",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#3c4a3c",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#3ce36a",
+                    "tertiary-fixed-dim": "#00e475",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#3ce36a",
+                    "background": "#f7f9fc",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-dim": "#d8dadd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#00c765",
+                    "secondary": "#525f71",
+                    "inverse-on-surface": "#eff1f4",
+                    "primary-fixed": "#69ff87",
+                    "surface-container-low": "#f2f4f7",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "surface-container-high": "#e6e8eb",
+                    "on-tertiary-fixed": "#00210b",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-primary-fixed-variant": "#00531e",
+                    "primary": "#006e2a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "2xl": "48px",
+                    "xs": "8px",
+                    "lg": "24px",
+                    "edge-margin": "20px",
+                    "sm": "12px"
+            },
+            "fontFamily": {
+                    "display-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sos-glow {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(186, 26, 26, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(186, 26, 26, 0); }
+        }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex items-center justify-between px-edge-margin h-14">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary">Centro de Seguridad</h1>
+</div>
+<button class="active:scale-95 duration-200 text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="pt-20 px-edge-margin space-y-6">
+<!-- Emergency SOS Section (High Impact) -->
+<section class="relative overflow-hidden rounded-2xl bg-error-container p-6 flex flex-col items-center text-center space-y-4">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-error-container">Asistencia Inmediata</h2>
+<p class="font-body-md text-body-md text-on-error-container/80 max-w-[280px]">Presiona el botón para alertar a las autoridades y a tus contactos de confianza.</p>
+<button class="sos-glow w-32 h-32 rounded-full bg-error flex items-center justify-center text-on-error active:scale-90 transition-all duration-200 shadow-xl border-4 border-white/20" onclick="triggerSOS()">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">sos</span>
+</button>
+<p class="font-label-lg text-label-lg text-error font-bold uppercase tracking-widest">Botón de Pánico</p>
+</section>
+<!-- Main Bento Features -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Audio Recording -->
+<div class="glass rounded-2xl p-5 border border-outline-variant/20 flex flex-col justify-between h-44 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="bg-primary-container p-2 rounded-xl text-on-primary-container">
+<span class="material-symbols-outlined">mic</span>
+</div>
+<span class="bg-primary/10 text-primary px-2 py-1 rounded-full font-label-md text-label-md">Encriptado AES-256</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Grabación de Audio</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Graba incidentes de forma discreta en la nube.</p>
+</div>
+</div>
+<!-- Trusted Contacts -->
+<div class="glass rounded-2xl p-5 border border-outline-variant/20 flex flex-col justify-between h-44 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="bg-secondary-container p-2 rounded-xl text-on-secondary-container">
+<span class="material-symbols-outlined">group</span>
+</div>
+<button class="text-primary font-label-lg text-label-lg">Gestionar</button>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Contactos de Confianza</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">3 contactos recibirán tu ubicación en tiempo real.</p>
+</div>
+</div>
+</div>
+<!-- Safety Tips Horizontal Scroll -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Consejos de Seguridad</h2>
+<button class="text-primary font-label-lg text-label-lg flex items-center">
+                    Ver todos <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+</button>
+</div>
+<div class="flex gap-4 overflow-x-auto scroll-hide pb-4 -mx-edge-margin px-edge-margin">
+<!-- Tip 1 -->
+<div class="min-w-[280px] bg-surface-container rounded-2xl overflow-hidden shadow-sm flex flex-col">
+<div class="h-32 w-full bg-cover bg-center" data-alt="A professional motorcyclist wearing a sleek, high-visibility green and black helmet with a clear visor, looking ahead focused. The background is a clean urban Salvadoran street at dawn with soft golden hour lighting, emphasizing professional gear and safety-first culture for MotoSV riders." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuc8XRLCaWTUI35nQoK2zjt1JlFVaS7F782p1RP1nwibJIcHTuNivMVNxC9uvxAUI_snXli6s5MDcm7FPxKOcOkVfoivBfVrJT9flZ42-QKEzTkO4AoPXk81UTPqChL7LAU9RbNpeIHviGyGMUzUxp9Aw7fZG32SM1hfuRqx21uUWOTtaahlcsJmiYKyx9XlQhPAw-sD-PaVplXcioM13gD0a0Hf3MwSXwfm3pvesjQBIqGOPqhje6H2RxJkKq2AQFv67oLwwt-Q')"></div>
+<div class="p-4 space-y-2">
+<span class="text-tertiary font-label-lg text-label-lg">EQUIPAMIENTO</span>
+<h4 class="font-title-lg text-title-lg leading-tight">Casco siempre certificado</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Asegúrate de que tu casco cumpla con la normativa DOT/ECE antes de iniciar.</p>
+</div>
+</div>
+<!-- Tip 2 -->
+<div class="min-w-[280px] bg-surface-container rounded-2xl overflow-hidden shadow-sm flex flex-col">
+<div class="h-32 w-full bg-cover bg-center" data-alt="A macro shot of a motorcycle's front disc brake and tire tread, showing high-quality maintenance and grip. The lighting is crisp and detailed, highlighting the mechanical reliability and safety checks performed on MotoSV premium motorcycles. Minimalist and clean aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCqcNS9yjWNbYTnDVUxV11rNhb3nv5spB4fyJP75KHxqj6jvpOrClwoc5jBYmYg9vqzjyfts2vbk9kNQCFwdoWOEU-xciBupiGDURCeXPs7buW_MxAP8aNxXyNrWV7S4pPenQerf10myonIWqy-xuPaQ1soRu-4k_1Md15I5OjIQv8W8md-cSk6L4XkLN6hLfRRGhkiKvJCl7TjLgvsjiIvzqxjdBcmFnr_TRR_9vLNVK7Zo7rKWdAzwIc_GNi79-c6T48D7hqeig')"></div>
+<div class="p-4 space-y-2">
+<span class="text-tertiary font-label-lg text-label-lg">MANTENIMIENTO</span>
+<h4 class="font-title-lg text-title-lg leading-tight">Chequeo de neumáticos</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">La presión correcta garantiza estabilidad en curvas y frenados de emergencia.</p>
+</div>
+</div>
+<!-- Tip 3 -->
+<div class="min-w-[280px] bg-surface-container rounded-2xl overflow-hidden shadow-sm flex flex-col">
+<div class="h-32 w-full bg-cover bg-center" data-alt="A minimalist overhead view of a motorcycle navigating through city traffic lanes with clear directional arrows on the asphalt. The scene depicts defensive driving and safety distance between vehicles in a bright, modern light-mode environment with subtle green accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8MTAH5FL99lYRdfLeRu_RVl0ZQHHbJgNkVF-6wFQ0TlwVq_UhRBHuDBvT9BWK0NVS1N1RnsI4g5nSxMPeiQT8Kg4eT1ZMBqCbUdXBbtiBY6QJtjGAEtze0vUA91rpFlk1woPcYcyp5Y3RHcCGLYEDpQAdKs7KV4EkEhW2vTNmmfDVIMK7Hi3p7D4JnDLDgtCgEF2s5gCusecQwTKWU5e6NaeCm3lr0tA6hZ13oh_vA7CxeA74xkr8iSre09K1jjbXH5K-BcHLpQ')"></div>
+<div class="p-4 space-y-2">
+<span class="text-tertiary font-label-lg text-label-lg">CONDUCCIÓN</span>
+<h4 class="font-title-lg text-title-lg leading-tight">Posición defensiva</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Mantén siempre una distancia segura y sé visible para los puntos ciegos.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Help Center Quick Link -->
+<button class="w-full flex items-center justify-between p-5 bg-surface-container-high rounded-2xl active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<div class="text-left">
+<h4 class="font-title-lg text-title-lg text-on-surface">¿Necesitas ayuda?</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Habla con soporte técnico 24/7</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</button>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-2 pb-8 px-4 bg-surface/85 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">motorcycle</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Seguridad</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Actividad</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Perfil</span>
+</a>
+</nav>
+<script>
+        function triggerSOS() {
+            // Haptic-like visual feedback and alert
+            const btn = document.querySelector('.sos-glow');
+            btn.classList.add('scale-125', 'bg-red-800');
+            
+            setTimeout(() => {
+                btn.classList.remove('scale-125', 'bg-red-800');
+                alert("ALERTA SOS ENVIADA: Tu ubicación actual y la grabación de audio han sido compartidas con el centro de control y tus contactos de emergencia.");
+            }, 500);
+
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate([200, 100, 200, 100, 500]);
+            }
+        }
+
+        // Add subtle parallax/scroll interaction for safety cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, div.glass').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>MotoSV | Chat with Carlos P.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#d6e4f9",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#00c853",
+                    "background": "#f7f9fc",
+                    "on-surface-variant": "#3c4a3c",
+                    "on-primary-fixed": "#002108",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-bright": "#f7f9fc",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-primary-fixed-variant": "#00531e",
+                    "surface": "#f7f9fc",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f2f4f7",
+                    "primary-fixed-dim": "#3ce36a",
+                    "surface-dim": "#d8dadd",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-primary-container": "#004c1b",
+                    "tertiary": "#006d35",
+                    "primary": "#006e2a",
+                    "tertiary-fixed": "#62ff96",
+                    "surface-tint": "#006e2a",
+                    "on-tertiary-container": "#004c22",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#00210b",
+                    "secondary": "#525f71",
+                    "surface-variant": "#e0e3e6",
+                    "surface-container-high": "#e6e8eb",
+                    "on-secondary-container": "#566475",
+                    "on-background": "#191c1e",
+                    "outline-variant": "#bbcbb8",
+                    "tertiary-fixed-dim": "#00e475",
+                    "primary-fixed": "#69ff87",
+                    "surface-container": "#eceef1",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "inverse-primary": "#3ce36a",
+                    "tertiary-container": "#00c765",
+                    "secondary-container": "#d3e1f6",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "outline": "#6c7b6a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "2xl": "48px",
+                    "edge-margin": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "lg": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "display-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f7f9fc;
+            overscroll-behavior-y: contain;
+        }
+        .glass-header {
+            background: rgba(247, 249, 252, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(187, 203, 184, 0.2);
+        }
+        .chat-container {
+            height: calc(100vh - 160px);
+            scrollbar-width: none;
+        }
+        .chat-container::-webkit-scrollbar {
+            display: none;
+        }
+        .bubble-in {
+            border-bottom-left-radius: 4px;
+        }
+        .bubble-out {
+            border-bottom-right-radius: 4px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 glass-header h-16 flex items-center justify-between px-edge-margin">
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a friendly Hispanic motorcycle driver named Carlos, wearing a clean green MotoSV branded safety vest and a modern matte black helmet nearby. The lighting is natural and bright, suggesting an outdoor urban setting in El Salvador. The overall aesthetic is trustworthy, professional, and high-end, matching the MotoSV brand colors of deep green and white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWWuy4d4fCwPojr8QsKWpTOcLUmLzobH_pfbfs9HNlQ7PnYBm_Luf2uw-7HQP4qtdFE92jStg46qHWTajbvWy1MuC2wPQu4-xspT3tlfPiKuuK8Q1N1M9_wIhXNUdkiY-qKhwfFR_UQ6pEhAmL1wb_6HweSISuMkxLrfOW9N86JhxfezmLppPZzfoegOUIj4ZOpPeoNYmmC8iuD_TAwuyNrZpIAzJKTvSlOvnKnPg8_OHxhWA7Qx2nVkbApH591VR7nlKIGJ3f2g">
+</div>
+<div>
+<h1 class="font-title-lg text-title-lg text-on-surface leading-tight">Carlos P.</h1>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 bg-primary-container rounded-full animate-pulse"></span>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Online • Honda CB500X</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-xs">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary-container active:scale-90 transition-transform">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">call</span>
+</button>
+</div>
+</header>
+<!-- Chat Canvas -->
+<main class="chat-container pt-20 pb-4 overflow-y-auto px-edge-margin space-y-lg flex flex-col">
+<!-- Date Separator -->
+<div class="flex justify-center my-md">
+<span class="px-4 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-lg text-label-lg">TODAY</span>
+</div>
+<!-- Incoming Message -->
+<div class="flex flex-col items-start max-w-[85%] space-y-1">
+<div class="bg-surface-container-lowest text-on-surface p-md rounded-2xl bubble-in shadow-sm border border-outline-variant/10">
+<p class="font-body-md text-body-md">Hello! I've arrived at your pickup location. I'm parked near the main entrance.</p>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant ml-2">10:42 AM</span>
+</div>
+<!-- Outgoing Message -->
+<div class="flex flex-col items-end self-end max-w-[85%] space-y-1">
+<div class="bg-primary text-on-primary p-md rounded-2xl bubble-out shadow-md">
+<p class="font-body-md text-body-md">Great! I'm just heading down the elevator now. Be there in 2 minutes.</p>
+</div>
+<div class="flex items-center gap-1 mr-2">
+<span class="font-label-lg text-label-lg text-on-surface-variant">10:43 AM</span>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'opsz' 14;">done_all</span>
+</div>
+</div>
+<!-- Incoming Message (Status) -->
+<div class="flex flex-col items-start max-w-[85%] space-y-1">
+<div class="bg-surface-container-lowest text-on-surface p-md rounded-2xl bubble-in shadow-sm border border-outline-variant/10">
+<p class="font-body-md text-body-md">Perfect. I'm wearing a green vest. Take your time, safety first! 🏍️</p>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant ml-2">10:44 AM</span>
+</div>
+<!-- Map Snippet (Shared Context) -->
+<div class="w-full h-40 rounded-2xl overflow-hidden relative shadow-sm border border-outline-variant/20 mb-4">
+<div class="absolute inset-0 bg-cover bg-center" data-location="San Salvador" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMVfNia5Fc7qmaQCrzsBH7zIIlVX7gf_kp4twwKomtXbhMSc6BraKkSsJJvhLm0VCusGHnL7zU-lYPP4S_da7FCAYbGKiLLc8xpevxlIoP-KJH3qSeQqrSkr9-lGCEk0ISHGZYgJ22taekUl8KSZQWmOFvBzzf7PFdlYR1KSKrzU0nkYvCmxTveZmj-64qsZrR-3DkGOZ4ynuOCh4XHhweRav4KABjsrQcrDq8cxmLRNuuhW6a6DEcQZ082gUL-EsDQxx7qMflJA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-3 left-3 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span class="font-label-lg text-label-lg text-on-surface">Driver's Location</span>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Controls -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-bright/95 backdrop-blur-xl z-50">
+<!-- Quick Replies -->
+<div class="flex gap-sm px-edge-margin py-3 overflow-x-auto no-scrollbar border-t border-outline-variant/10">
+<button class="whitespace-nowrap px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-lg text-label-lg hover:bg-secondary-fixed transition-colors active:scale-95">
+                I am here
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-lg text-label-lg hover:bg-secondary-fixed transition-colors active:scale-95">
+                Wait for me
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-lg text-label-lg hover:bg-secondary-fixed transition-colors active:scale-95">
+                Where are you?
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-lg text-label-lg hover:bg-secondary-fixed transition-colors active:scale-95">
+                Coming now
+            </button>
+</div>
+<!-- Input Bar -->
+<div class="flex items-center gap-md px-edge-margin pt-2 pb-8">
+<button class="w-12 h-12 flex items-center justify-center rounded-2xl bg-surface-container-high text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="flex-1 relative">
+<input class="w-full h-12 bg-surface-container-low border-none rounded-2xl px-md font-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary-container transition-all" placeholder="Type a message..." type="text">
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">sentiment_satisfied</span>
+</button>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary-container/30 active:scale-90 transition-transform">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</footer>
+<script>
+        // Scroll to bottom on load
+        window.onload = () => {
+            const chatBox = document.querySelector('main');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+
+        // Simple animation for input focus
+        const input = document.querySelector('input');
+        input.addEventListener('focus', () => {
+            document.querySelector('footer').classList.add('shadow-[0px_-8px_30px_rgba(0,200,83,0.1)]');
+        });
+        input.addEventListener('blur', () => {
+            document.querySelector('footer').classList.remove('shadow-[0px_-8px_30px_rgba(0,200,83,0.1)]');
+        });
+
+        // Quick reply functionality simulation
+        const quickReplies = document.querySelectorAll('button[class*="whitespace-nowrap"]');
+        quickReplies.forEach(btn => {
+            btn.addEventListener('click', () => {
+                input.value = btn.innerText.trim();
+                input.focus();
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MotoSV Driver Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e6",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#004c1b",
+                    "secondary-fixed": "#d6e4f9",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "surface": "#f7f9fc",
+                    "surface-container": "#eceef1",
+                    "secondary-container": "#d3e1f6",
+                    "on-secondary-container": "#566475",
+                    "tertiary": "#006d35",
+                    "tertiary-fixed": "#62ff96",
+                    "outline": "#6c7b6a",
+                    "on-tertiary-container": "#004c22",
+                    "surface-bright": "#f7f9fc",
+                    "on-surface": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006e2a",
+                    "outline-variant": "#bbcbb8",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "on-primary-fixed": "#002108",
+                    "primary-container": "#00c853",
+                    "inverse-surface": "#2d3133",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#3c4a3c",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#3ce36a",
+                    "tertiary-fixed-dim": "#00e475",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#3ce36a",
+                    "background": "#f7f9fc",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-dim": "#d8dadd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#00c765",
+                    "secondary": "#525f71",
+                    "inverse-on-surface": "#eff1f4",
+                    "primary-fixed": "#69ff87",
+                    "surface-container-low": "#f2f4f7",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "surface-container-high": "#e6e8eb",
+                    "on-tertiary-fixed": "#00210b",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-primary-fixed-variant": "#00531e",
+                    "primary": "#006e2a",
+                    "gold-accent": "#D4AF37",
+                    "gold-muted": "#F4EBD0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "2xl": "48px",
+                    "xs": "8px",
+                    "lg": "24px",
+                    "edge-margin": "20px",
+                    "sm": "12px"
+            },
+            "fontFamily": {
+                    "display-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bar-transition {
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex items-center justify-between px-edge-margin h-14">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary active:scale-95 duration-200">menu</button>
+<h1 class="font-display-md text-display-md tracking-tighter text-primary">MotoSV</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end hidden md:block">
+<span class="font-label-lg text-label-lg text-primary">Status: Online</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Carlos Mendoza</span>
+</div>
+<button class="material-symbols-outlined text-primary active:scale-95 duration-200">notifications</button>
+</div>
+</header>
+<main class="mt-20 px-edge-margin max-w-5xl mx-auto">
+<!-- Dashboard Header / Balance Card -->
+<section class="relative overflow-hidden rounded-3xl p-lg mb-lg bg-[#0D1B2A] text-white shadow-xl">
+<!-- Subtle Gold Atmospheric Shader/Gradient -->
+<div class="absolute inset-0 opacity-20 pointer-events-none bg-gradient-to-br from-gold-accent via-transparent to-primary"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<p class="font-label-lg text-label-lg text-gold-muted opacity-80 mb-base">Balance Semanal</p><p class="font-label-md text-label-md text-white/40">Próximo pago: 15 Mayo</p>
+<h2 class="font-display-lg text-display-lg flex items-baseline gap-xs">
+<span class="text-gold-accent">$</span>428.50
+                    </h2>
+</div>
+<button class="bg-primary-container text-on-primary-container px-lg py-sm rounded-xl font-title-lg text-title-lg shadow-lg active:scale-95 transition-transform duration-150 flex items-center gap-xs">
+<span class="material-symbols-outlined">payments</span>
+                    Retirar
+                </button>
+</div>
+<!-- Mini Stats Row -->
+<div class="relative z-10 grid grid-cols-3 gap-sm mt-lg pt-lg border-t border-white/10"><div class="text-center flex flex-col items-center gap-xs"><span class="material-symbols-outlined text-primary-container opacity-80">calendar_today</span><div><p class="font-label-md text-label-md text-white/60">Hoy</p><p class="font-title-lg text-title-lg text-primary-container">$72.40</p></div></div><div class="text-center border-x border-white/10 flex flex-col items-center gap-xs"><span class="material-symbols-outlined text-white/60">motorcycle</span><div><p class="font-label-md text-label-md text-white/60">Viajes</p><p class="font-title-lg text-title-lg">12</p></div></div><div class="text-center flex flex-col items-center gap-xs"><span class="material-symbols-outlined text-white/60">schedule</span><div><p class="font-label-md text-label-md text-white/60">En Línea</p><p class="font-title-lg text-title-lg">6h 45m</p></div></div></div>
+</section>
+<!-- Bento Grid for Analytics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Weekly Chart -->
+<div class="md:col-span-2 glass-card rounded-3xl p-lg shadow-sm">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-title-lg text-title-lg">Rendimiento Semanal</h3>
+<div class="flex gap-xs">
+<span class="px-sm py-xs bg-surface-container rounded-full font-label-md text-label-md">Lun - Dom</span>
+</div>
+</div>
+<div class="flex items-end justify-around h-48 gap-xs">
+<!-- Bars with Green Primary #00C853 -->
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative group h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[60%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">L</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[85%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">M</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[40%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">M</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[95%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">J</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[70%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">V</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-bold text-label-md text-gold-accent">$120</span>
+<div class="absolute bottom-0 w-full bg-gold-accent bar-transition h-[100%] shadow-[0_0_15px_rgba(212,175,55,0.4)]"></div>
+</div>
+<span class="font-label-md text-label-md text-gold-accent font-bold">S</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full bg-primary-container/20 rounded-t-lg relative h-24 overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary-container bar-transition h-[20%]"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">D</span>
+</div>
+</div>
+</div>
+<!-- Driver Rating / Profile Summary Card -->
+<div class="glass-card rounded-3xl p-lg shadow-sm flex flex-col items-center justify-center text-center">
+<div class="relative mb-md">
+<img class="w-24 h-24 rounded-full object-cover border-4 border-primary shadow-lg" data-alt="A professional and friendly portrait of a male motorcycle driver in his late 20s, wearing a high-quality MotoSV branded green and black jacket. The background is a soft-focus urban environment in San Salvador during golden hour, reflecting a high-end, premium service aesthetic. The lighting is warm and flattering, emphasizing reliability and professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZMUs67wTX6yvEtz6ar-DweX28_rWEIJyOOBkjjk_arRvzFrtp7-ggbCiLi6cisOS5hXwWTf18dH-BbBgvTvH4rIN0z8cAmcjUl3ap14J85VaN27SznhVgBZdu4c59eFVU1s4TMQoh_SrIc2MbTEcHvyt9g7YydEV-BvGYqvm3dXbITk890hJqIFsOW856W3hFoRKvNyRagPaFhKPzXcqkkZg3QFBULAa_TYnyR-ZkY4HvIdpN0jvYCHyfa-OVrdz0TRIFwwn-sg">
+<div class="absolute -bottom-2 right-0 bg-gold-accent text-white px-2 py-0.5 rounded-full text-label-md font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.95
+                    </div>
+</div>
+<h4 class="font-title-lg text-title-lg">Socio Premium</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Carlos Mendoza</p>
+<div class="w-full bg-surface-container rounded-full h-2 mb-xs">
+<div class="bg-primary h-full rounded-full w-[88%] shadow-[0_0_8px_rgba(0,110,42,0.3)]"></div>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Faltan 12 viajes para el bono Gold</p><button class="mt-sm text-primary font-label-lg text-label-lg hover:underline">Ver beneficios</button>
+</div>
+</div>
+<!-- Recent Transactions -->
+<section class="mt-lg">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-lg text-title-lg">Viajes Recientes</h3>
+<button class="text-primary font-label-lg text-label-lg hover:underline transition-all">Ver todos</button>
+</div>
+<div class="space-y-sm">
+<!-- Transaction Item 1 -->
+<div class="glass-card rounded-2xl p-md flex items-center justify-between group active:scale-[0.99] transition-transform">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">motorcycle</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Santa Elena → Multiplaza</p>
+<p class="font-label-md text-label-md text-on-surface-variant">14:32 • 5.2 km</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-primary-container">+$6.80</p>
+<span class="inline-block px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">Finalizado</span>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="glass-card rounded-2xl p-md flex items-center justify-between group active:scale-[0.99] transition-transform">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">motorcycle</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Colonia Escalón → San Benito</p>
+<p class="font-label-md text-label-md text-on-surface-variant">12:15 • 3.8 km</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-primary-container">+$4.50</p>
+<span class="inline-block px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">Finalizado</span>
+</div>
+</div>
+<!-- Transaction Item 3 (Bonus) -->
+<div class="glass-card rounded-2xl p-md flex items-center justify-between group active:scale-[0.99] transition-transform border-gold-accent/30 bg-gold-muted/10">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-gold-accent/10 flex items-center justify-center text-gold-accent">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Bono de Alta Demanda</p>
+<p class="font-label-md text-label-md text-on-surface-variant">11:00 • Multiplicador x1.5</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-gold-accent">+$15.00</p>
+<p class="font-label-md text-label-md text-gold-accent">Crédito</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface/85 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl z-50 flex justify-around items-center pt-2 pb-8 px-4">
+<!-- Wallet Active -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">motorcycle</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg-mobile mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for bar entrance animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.bar-transition');
+            bars.forEach((bar, index) => {
+                const height = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = height;
+                }, 100 + (index * 50));
+            });
+        });
+
+        // Simple withdrawal modal placeholder logic
+        const withdrawBtn = document.querySelector('button:has(span:contains("payments"))');
+        if(withdrawBtn) {
+            withdrawBtn.addEventListener('click', () => {
+                alert('Procesando solicitud de retiro a tu cuenta bancaria vinculada...');
+            });
+        }
+    </script>
+</body></html>

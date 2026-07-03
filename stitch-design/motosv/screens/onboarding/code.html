@@ -1,0 +1,293 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>MotoSV Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#3ce36a",
+                    "tertiary-container": "#00c765",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e3e6",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "surface-container": "#eceef1",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#00531e",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#006d35",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-background": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "on-surface-variant": "#3c4a3c",
+                    "surface-container-highest": "#e0e3e6",
+                    "outline": "#6c7b6a",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "secondary-fixed": "#d6e4f9",
+                    "primary-container": "#00c853",
+                    "on-tertiary-fixed": "#00210b",
+                    "secondary": "#525f71",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f7f9fc",
+                    "on-primary-container": "#004c1b",
+                    "surface-container-high": "#e6e8eb",
+                    "surface-container-low": "#f2f4f7",
+                    "surface": "#f7f9fc",
+                    "on-surface": "#191c1e",
+                    "on-tertiary-container": "#004c22",
+                    "tertiary-fixed": "#62ff96",
+                    "inverse-on-surface": "#eff1f4",
+                    "background": "#f7f9fc",
+                    "primary-fixed": "#69ff87",
+                    "on-secondary-container": "#566475",
+                    "outline-variant": "#bbcbb8",
+                    "secondary-container": "#d3e1f6",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#006e2a",
+                    "primary": "#006e2a",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#3ce36a",
+                    "on-primary-fixed": "#002108",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d8dadd",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "tertiary-fixed-dim": "#00e475"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "edge-margin": "20px",
+                    "xl": "32px",
+                    "gutter": "16px",
+                    "2xl": "48px",
+                    "lg": "24px",
+                    "sm": "12px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F5F7FA;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .step-container {
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .step-container::-webkit-scrollbar {
+            display: none;
+        }
+        .step-slide {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .active-dot {
+            width: 24px !important;
+            background-color: #006e2a !important;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .haptic-feedback:active {
+            transform: scale(0.96);
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#F5F7FA] text-on-surface">
+<!-- Top AppBar (Identity Anchor) -->
+<header class="fixed top-0 left-0 w-full z-40 px-edge-margin py-sm flex justify-center items-center pointer-events-none">
+<h1 class="font-display-md text-display-md font-bold text-primary tracking-tighter">MotoSV</h1>
+</header>
+<!-- Onboarding Flow Container -->
+<main class="step-container flex w-full h-screen overflow-x-auto overflow-y-hidden transition-all duration-500" id="onboarding-carousel">
+<!-- Step 1: Speed -->
+<section class="step-slide relative flex flex-col items-center justify-center p-edge-margin bg-surface">
+<div class="w-full max-w-sm flex flex-col items-center text-center">
+<div class="relative w-72 h-72 mb-12 flex items-center justify-center fade-up" style="animation-delay: 0.1s;">
+<div class="absolute inset-0 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+<img class="w-64 h-64 object-contain relative z-10 drop-shadow-2xl" data-alt="A sleek, aerodynamic motorcycle silhouette rendered in a vibrant neon primary green color against a clean, minimalist light grey background. The motorcycle is tilted as if leaning into a fast turn, with motion blur streaks emphasizing high speed and urban agility. The lighting is bright and professional, typical of a high-end tech platform aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWLGn87qgG0ecCRBbu3eRwpqziDOrMUIMQFgyHrrusSrSXIRCC9Z6mFMUoVp0brO9_NV4TOEghAriLwZUvRcPxFiNf3YyZB4zDXdmyBDP76WSrLLxs2dQceBAkcA5zhhnWbR2IEei5SyzolMhDGLPFlXZE_0lrR0BHW3vzjOt77jjG0F-ku5sDAuH0e-_99tbj_iucZDrnKQJwRmE1NsbrmOEJh9dDdtjyrdHabU-IFEcIV1kUX3BlSmUdkPJYQF7cqW6IZ187SQ">
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-md fade-up" style="animation-delay: 0.2s;">Viaja más rápido</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px] fade-up" style="animation-delay: 0.3s;">Evita el tráfico de la ciudad y llega a tu destino en tiempo récord con nuestros conductores expertos.</p>
+</div>
+</section>
+<!-- Step 2: Rates -->
+<section class="step-slide relative flex flex-col items-center justify-center p-edge-margin bg-surface">
+<div class="w-full max-w-sm flex flex-col items-center text-center">
+<div class="relative w-72 h-72 mb-12 flex items-center justify-center fade-up">
+<div class="absolute inset-0 bg-tertiary-container/10 rounded-full blur-3xl"></div>
+<img class="w-64 h-64 object-contain relative z-10 drop-shadow-xl" data-alt="A sophisticated 3D illustration of golden and green metallic coins cascading into a sleek, glass-textured digital wallet. The scene is set against a soft, premium light mode environment with high-key lighting. The style is modern minimalism with a focus on savings and value, utilizing the MotoSV primary green as a key accent color in the coins and UI elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANtSn4JNYNOVr4JxG03k6BurZ1mhFYjW6CD9XKmWfxbCsg4i8z8e5h8__M15eo2KzUSKR44uWO5rb2Rf9A0hvnjdy8M97uZ3foKT05fgBWg6dD2GNwJz_yR1JqBA5i9jo_7Bzi3j2dpg-0uqE8DMxGNJpbc9y2O8jqMwgL2pjxWJ1hqaOBYbKKLtFwdmfLAkPNMLwJ2VYZuulO42tTbWbgiCQWtcu2BgvQ0h6F4jzQGJcjdpSQdz8ZSpRNMPdDwWWVVLzqL9kt-Q">
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-md">Tarifas accesibles</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px]">Disfruta de los precios más competitivos del mercado sin sacrificar la calidad del servicio.</p>
+</div>
+</section>
+<!-- Step 3: Verified -->
+<section class="step-slide relative flex flex-col items-center justify-center p-edge-margin bg-surface">
+<div class="w-full max-w-sm flex flex-col items-center text-center">
+<div class="relative w-72 h-72 mb-12 flex items-center justify-center fade-up">
+<div class="absolute inset-0 bg-primary-container/10 rounded-full blur-3xl"></div>
+<div class="w-48 h-48 rounded-3xl glass-card flex items-center justify-center relative z-10">
+<span class="material-symbols-outlined text-primary-container text-[120px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="absolute -bottom-4 -right-4 w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-lg border-4 border-surface">
+<span class="material-symbols-outlined text-on-primary text-4xl">shield</span>
+</div>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-md">Conductores verificados</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px]">Tu seguridad es nuestra prioridad. Todos nuestros socios pasan por un riguroso proceso de certificación.</p>
+</div>
+</section>
+</main>
+<!-- Bottom Controls Shell -->
+<footer class="fixed bottom-0 left-0 w-full p-edge-margin pb-xl flex flex-col items-center z-50">
+<!-- Pagination Dots -->
+<div class="flex gap-2 mb-xl" id="pagination-dots">
+<div class="dot h-2 w-2 rounded-full bg-outline-variant transition-all duration-300 active-dot"></div>
+<div class="dot h-2 w-2 rounded-full bg-outline-variant transition-all duration-300"></div>
+<div class="dot h-2 w-2 rounded-full bg-outline-variant transition-all duration-300"></div>
+</div>
+<!-- Massive Primary Button -->
+<button class="haptic-feedback w-full max-w-sm h-14 bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all hover:brightness-105 active:scale-95" id="next-btn">
+<span id="btn-text">Siguiente</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="hidden haptic-feedback w-full max-w-sm h-14 bg-primary text-on-primary font-label-lg text-label-lg rounded-xl shadow-lg flex items-center justify-center transition-all hover:brightness-105 active:scale-95" id="start-btn">
+            Comenzar
+        </button>
+</footer>
+<script>
+        const carousel = document.getElementById('onboarding-carousel');
+        const dots = document.querySelectorAll('.dot');
+        const nextBtn = document.getElementById('next-btn');
+        const startBtn = document.getElementById('start-btn');
+        const btnText = document.getElementById('btn-text');
+        let currentStep = 0;
+
+        function updateDots(index) {
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active-dot');
+                } else {
+                    dot.classList.remove('active-dot');
+                }
+            });
+        }
+
+        function scrollToStep(index) {
+            carousel.scrollTo({
+                left: index * window.innerWidth,
+                behavior: 'smooth'
+            });
+            currentStep = index;
+            updateUI(index);
+        }
+
+        function updateUI(index) {
+            updateDots(index);
+            if (index === 2) {
+                nextBtn.classList.add('hidden');
+                startBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                startBtn.classList.add('hidden');
+            }
+        }
+
+        carousel.addEventListener('scroll', () => {
+            const index = Math.round(carousel.scrollLeft / window.innerWidth);
+            if (index !== currentStep) {
+                currentStep = index;
+                updateUI(index);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < 2) {
+                scrollToStep(currentStep + 1);
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
+            // Haptic trigger simulation
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(20);
+            }
+            
+            // Interaction: Fade out and redirect logic would go here
+            document.body.classList.add('transition-opacity', 'duration-500', 'opacity-0');
+            setTimeout(() => {
+                alert('Iniciando experiencia MotoSV...');
+            }, 500);
+        });
+
+        // Handle window resize for carousel alignment
+        window.addEventListener('resize', () => {
+            scrollToStep(currentStep);
+        });
+    </script>
+</body></html>

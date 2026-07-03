@@ -1,0 +1,309 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MotoSV - Verificación de Documentos</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Shared Components JSON & Style Guidance Logic -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#d6e4f9",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#00c853",
+                    "background": "#f7f9fc",
+                    "on-surface-variant": "#3c4a3c",
+                    "on-primary-fixed": "#002108",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-bright": "#f7f9fc",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-primary-fixed-variant": "#00531e",
+                    "surface": "#f7f9fc",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f2f4f7",
+                    "primary-fixed-dim": "#3ce36a",
+                    "surface-dim": "#d8dadd",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-primary-container": "#004c1b",
+                    "tertiary": "#006d35",
+                    "primary": "#006e2a",
+                    "tertiary-fixed": "#62ff96",
+                    "surface-tint": "#006e2a",
+                    "on-tertiary-container": "#004c22",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#00210b",
+                    "secondary": "#525f71",
+                    "surface-variant": "#e0e3e6",
+                    "surface-container-high": "#e6e8eb",
+                    "on-secondary-container": "#566475",
+                    "on-background": "#191c1e",
+                    "outline-variant": "#bbcbb8",
+                    "tertiary-fixed-dim": "#00e475",
+                    "primary-fixed": "#69ff87",
+                    "surface-container": "#eceef1",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "inverse-primary": "#3ce36a",
+                    "tertiary-container": "#00c765",
+                    "secondary-container": "#d3e1f6",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "outline": "#6c7b6a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "2xl": "48px",
+                    "edge-margin": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "lg": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "display-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm h-14 flex items-center justify-between px-edge-margin">
+<button class="text-primary hover:bg-primary-container/20 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary">Document Center</h1>
+<button class="text-primary hover:bg-primary-container/20 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">help</span>
+</button>
+</header>
+<main class="mt-20 px-edge-margin space-y-lg">
+<!-- Identity Verification Header Card -->
+<section class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant/10">
+<div class="flex items-center gap-md mb-sm">
+<div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Verification Status</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Complete your profile to start riding with MotoSV.</p>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full mt-lg overflow-hidden">
+<div class="bg-primary-container h-full w-1/3 transition-all duration-500"></div>
+</div>
+<p class="font-label-lg text-label-lg mt-xs text-on-surface-variant">33% Completed (1 of 3 verified)</p>
+</section>
+<!-- Document Checklist - Bento-style Grid -->
+<section class="grid grid-cols-1 gap-gutter">
+<!-- Item 1: Driver's License (Pending) -->
+<div class="glass p-md rounded-xl border border-outline-variant/20 flex flex-col gap-md transition-all hover:shadow-md">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="p-xs bg-surface-container-high rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div>
+<h3 class="font-title-lg text-body-lg font-bold">Driver's License (DUI)</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Must be valid for at least 6 months</p>
+</div>
+</div>
+<span class="px-sm py-1 bg-surface-container-high text-on-surface-variant font-label-lg text-[10px] rounded-full uppercase tracking-wider">Pending</span>
+</div>
+<div class="flex gap-sm">
+<button class="flex-1 h-12 bg-primary text-on-primary font-label-lg rounded-xl flex items-center justify-center gap-xs active:scale-[0.98] transition-transform" onclick="handleUpload('license')">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                        Take Photo
+                    </button>
+<button class="px-md bg-secondary-container text-on-secondary-container rounded-xl flex items-center justify-center active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Vehicle Registration (Uploaded/Review) -->
+<div class="glass p-md rounded-xl border border-primary-container/30 bg-primary-container/5 flex flex-col gap-md transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="p-xs bg-primary-container/20 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<div>
+<h3 class="font-title-lg text-body-lg font-bold text-on-surface">Vehicle Registration</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Tarjeta de Circulación (Clean scan)</p>
+</div>
+</div>
+<span class="px-sm py-1 bg-primary-container text-on-primary-container font-label-lg text-[10px] rounded-full uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span> Review
+                    </span>
+</div>
+<div class="relative group cursor-pointer overflow-hidden rounded-lg aspect-[16/9] border border-outline-variant/10 shadow-inner">
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
+<span class="text-white font-label-lg">View Document</span>
+</div>
+<img class="w-full h-full object-cover" data-alt="A macro shot of a Salvadoran vehicle registration card on a dark oak desk. The image has a professional depth-of-field, with sharp focus on the MotoSV logo watermark. High-end product photography style with cool, bright studio lighting in line with a clean light-mode aesthetic. Primary greens and deep navy tones dominate the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqd4gYwks7_1Tc29LchiqfjhSN4ezzNypUQz8uRyC8-E_Zup-fDssA5Oy532FPvF4dm33lFdgLZJcroDSioJZoLq0h-46ARJpmk2F9aWzx_Fkn8Gj76B7IcSDnyOJkXq-hziimVASk6ApMczlATjdFgs6kUryc43WSLqRBUn-IRukR11ixSXk17IJvYWIRfgLjkITiY6n2c8zrTMPWIcIrGYHDcECbqoDUGSuWoYIJ3vheACm8ovVf1w_X5ibBTmVzYGxBGC-uhw">
+</div>
+<button class="w-full h-10 border border-outline text-on-surface-variant font-label-lg rounded-xl flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit</span> Replace Image
+                </button>
+</div>
+<!-- Item 3: Criminal Record Check (Rejected/Error) -->
+<div class="glass p-md rounded-xl border border-error/30 bg-error-container/10 flex flex-col gap-md transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="p-xs bg-error-container/20 rounded-lg text-error">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<h3 class="font-title-lg text-body-lg font-bold">Criminal Record Check</h3>
+<p class="font-label-md text-label-md text-error">Document was blurry or incomplete</p>
+</div>
+</div>
+<span class="px-sm py-1 bg-error text-on-error font-label-lg text-[10px] rounded-full uppercase tracking-wider">Rejected</span>
+</div>
+<div class="bg-surface-container-low p-sm rounded-lg flex items-start gap-sm border border-error/10">
+<span class="material-symbols-outlined text-error text-[20px]">info</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Please ensure all four corners of the Solvencia de la PNC are visible and the text is legible under bright light.</p>
+</div>
+<button class="w-full h-12 bg-primary text-on-primary font-label-lg rounded-xl flex items-center justify-center gap-xs shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span> Retake Photo
+                </button>
+</div>
+</section>
+<!-- Security Info -->
+<section class="flex flex-col items-center justify-center py-lg opacity-60">
+<div class="flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="font-label-md text-label-md uppercase tracking-widest">Secure 256-bit Encryption</span>
+</div>
+<p class="font-body-md text-body-md text-center max-w-xs">Your personal data is encrypted and used only for background verification purposes.</p>
+</section>
+</main>
+<!-- Success/Submit Action (FAB replacement for focused screens) -->
+<div class="fixed bottom-0 left-0 w-full p-edge-margin glass z-50 shadow-[0px_-4px_20px_rgba(0,0,0,0.05)]">
+<button class="w-full h-14 bg-surface-container-highest text-on-surface-variant font-label-lg rounded-xl flex items-center justify-center gap-sm cursor-not-allowed transition-all" disabled="" id="finalSubmit">
+            Submit for Final Review
+            <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<!-- Upload Progress Modal (Simulation) -->
+<div class="fixed inset-0 z-[100] bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-edge-margin hidden" id="uploadModal">
+<div class="bg-surface w-full max-w-sm rounded-2xl p-lg shadow-2xl flex flex-col items-center text-center">
+<div class="relative w-20 h-20 mb-md">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary transition-all duration-300" cx="40" cy="40" fill="transparent" id="progressBar" r="36" stroke="currentColor" stroke-dasharray="226" stroke-dashoffset="180" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">cloud_upload</span>
+</div>
+</div>
+<h4 class="font-headline-lg-mobile text-headline-lg-mobile mb-xs">Uploading DUI</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Optimizing image quality for faster processing...</p>
+<button class="font-label-lg text-primary underline" onclick="closeModal()">Cancel</button>
+</div>
+</div>
+<script>
+        function handleUpload(type) {
+            const modal = document.getElementById('uploadModal');
+            const bar = document.getElementById('progressBar');
+            modal.classList.remove('hidden');
+            
+            let progress = 226; // Circumference
+            const interval = setInterval(() => {
+                progress -= 20;
+                bar.style.strokeDashoffset = progress;
+                if (progress <= 0) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        alert('Document uploaded successfully! Our team will review it within 24 hours.');
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        function closeModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        }
+
+        // Simulating haptic feedback for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+    </script>
+</body></html>

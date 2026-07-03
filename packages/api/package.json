@@ -1,0 +1,21 @@
+{
+  "name": "@motosv/api",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@motosv/domain": "workspace:*",
+    "@supabase/supabase-js": "^2.45.0",
+    "@t3-oss/env-core": "^0.13.11",
+    "@tanstack/react-query": "^5.50.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "react": "^18.3.0",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.0"
+  }
+}

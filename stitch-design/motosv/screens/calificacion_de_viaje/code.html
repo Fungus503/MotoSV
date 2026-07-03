@@ -1,0 +1,271 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>MotoSV - Calificación de Viaje</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#6c7b6a",
+                    "on-primary-container": "#004c1b",
+                    "surface-dim": "#d8dadd",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d6e4f9",
+                    "surface-variant": "#e0e3e6",
+                    "outline-variant": "#bbcbb8",
+                    "primary-fixed": "#69ff87",
+                    "primary-container": "#00c853",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#3ce36a",
+                    "on-secondary-container": "#566475",
+                    "secondary-container": "#d3e1f6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#004c22",
+                    "tertiary": "#006d35",
+                    "primary": "#006e2a",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#3c4a3c",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "surface-container-low": "#f2f4f7",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#62ff96",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#00c765",
+                    "surface-bright": "#f7f9fc",
+                    "on-tertiary-fixed": "#00210b",
+                    "surface": "#f7f9fc",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "on-primary-fixed": "#002108",
+                    "on-background": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "inverse-primary": "#3ce36a",
+                    "surface-container-high": "#e6e8eb",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "tertiary-fixed-dim": "#00e475",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#00531e",
+                    "background": "#f7f9fc",
+                    "surface-tint": "#006e2a",
+                    "secondary": "#525f71",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-container": "#eceef1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "xs": "8px",
+                    "sm": "12px",
+                    "edge-margin": "20px",
+                    "base": "4px",
+                    "lg": "24px",
+                    "2xl": "48px",
+                    "md": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .star-rating .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .star-rating .active .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+            color: #00c853;
+            transform: scale(1.1);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .active-tag {
+            background-color: #00c853 !important;
+            color: white !important;
+            border-color: #00c853 !important;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #00c853 !important;
+            box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container/30">
+<!-- Top AppBar (From JSON Blueprint) -->
+<header class="bg-surface/80 backdrop-blur-xl docked full-width top-0 sticky z-40 shadow-sm flex justify-between items-center w-full px-edge-margin h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant hover:opacity-80 cursor-pointer" onclick="window.history.back()">arrow_back</span>
+<h1 class="font-display-md text-display-md font-bold text-primary">MotoSV</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">notifications</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a tech-savvy user in El Salvador, featuring soft studio lighting, a high-key light mode aesthetic with white and light gray tones. The subject has a confident, friendly expression. The background is a clean, minimalist urban interior with subtle green accents reflecting the MotoSV brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGHoRn0MGkGXNbEOIN7ntItUUjXSNpGxyJlm8SkaaBPpcXp7YLg8ojKjsmmsj0NkM62n2st848iO1CcVVEzph2ye5llbwxsLh4g6wFZPsMZ03HQAn3MtRr1PjTqa49IEXOfCGFEimfg-GP5eQbcUnj-10-a3MUMiFzvHmGtB2rriRuW9LO2pif6GIvf0Ih4KfOVK1a_YhXHmbj2B6XEWx6eyQaVz1UtZJO2M5kaPOLCi5m6lDhP15X_9ZdReG0sChsr-1soMuzGQ">
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto px-edge-margin pt-lg pb-32">
+<!-- Title Section -->
+<div class="mb-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Calificación de Viaje</h2>
+<p class="font-body-md text-on-surface-variant mt-base">Tu opinión nos ayuda a mantener la seguridad en la ruta.</p>
+</div>
+<!-- Driver Hero Card -->
+<div class="glass-panel rounded-2xl p-lg shadow-sm mb-lg flex flex-col items-center text-center">
+<div class="relative mb-md">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-primary-container/10">
+<img class="w-full h-full object-cover" data-alt="A large, clear professional portrait of a Salvadoran motorcycle driver named Carlos Rivera. He wears a premium green MotoSV branded jacket and a friendly smile. The lighting is bright and natural, set against a blurred urban background in San Salvador during the daytime. The aesthetic is clean and high-fidelity, conveying safety and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQQM6NAnLc2V6T7kLnvHAl_fj0aQiLwXuQIqfB9TJqpQ681W43-7Co5ca2dND5Bi86_K53XDaUIKzlVC79N1yowT17BtQEHcCvjzKG3PfZmsZO1_wfG5XsqI5YJfnMg84knBTW840DOM1BG1EJh2FkOh-brwj5gF6hCYhSXRVbLfAvmUq4Nx-c2pki9jOrk4n-xsxvb-o1_25CXdqcZmkpxu6_hODnRzhp28v13LDKR-xq_p9CsrIHMEBpa8N-EcVhsNHPkyzkcQ">
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Carlos Rivera</h3>
+<div class="flex items-center gap-xs mt-base px-sm py-base bg-secondary-container/30 rounded-full">
+<span class="material-symbols-outlined text-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">motorcycle</span>
+<span class="font-label-lg text-label-lg text-on-secondary-container">Honda CB500X • P-456 789</span>
+</div>
+</div>
+<!-- Rating Selection -->
+<section class="mb-lg">
+<div class="flex justify-center items-center gap-md star-rating py-sm" id="starContainer">
+<button class="star-btn active" data-rating="1"><span class="material-symbols-outlined text-4xl">star</span></button>
+<button class="star-btn active" data-rating="2"><span class="material-symbols-outlined text-4xl">star</span></button>
+<button class="star-btn active" data-rating="3"><span class="material-symbols-outlined text-4xl">star</span></button>
+<button class="star-btn active" data-rating="4"><span class="material-symbols-outlined text-4xl">star</span></button>
+<button class="star-btn" data-rating="5"><span class="material-symbols-outlined text-4xl">star</span></button>
+</div>
+<p class="text-center font-label-lg text-primary mt-base uppercase tracking-widest" id="ratingLabel">Muy Bueno</p>
+</section>
+<!-- Feedback Tags -->
+<section class="mb-lg">
+<h4 class="font-label-lg text-label-lg text-on-surface-variant mb-md uppercase tracking-wider">¿Qué destacó del viaje?</h4>
+<div class="flex flex-wrap gap-sm">
+<button class="feedback-tag border-1.5 border-outline-variant/30 px-md py-sm rounded-xl font-label-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="this.classList.toggle('active-tag')">Friendly</button>
+<button class="feedback-tag border-1.5 border-outline-variant/30 px-md py-sm rounded-xl font-label-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="this.classList.toggle('active-tag')">Safe Driving</button>
+<button class="feedback-tag border-1.5 border-outline-variant/30 px-md py-sm rounded-xl font-label-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="this.classList.toggle('active-tag')">Clean Bike</button>
+<button class="feedback-tag border-1.5 border-outline-variant/30 px-md py-sm rounded-xl font-label-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="this.classList.toggle('active-tag')">On Time</button>
+<button class="feedback-tag border-1.5 border-outline-variant/30 px-md py-sm rounded-xl font-label-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="this.classList.toggle('active-tag')">Great Route</button>
+</div>
+</section>
+<!-- Comment Area -->
+<section class="mb-2xl">
+<h4 class="font-label-lg text-label-lg text-on-surface-variant mb-md uppercase tracking-wider">Comentarios adicionales</h4>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-md font-body-md text-on-surface placeholder:text-outline-variant h-32 resize-none" placeholder="Escribe tu experiencia aquí..."></textarea>
+</section>
+<!-- Submit Button -->
+<button class="w-full h-14 bg-primary-container text-on-primary font-title-lg rounded-2xl shadow-lg shadow-primary-container/20 hover:scale-[1.02] active:scale-95 transition-all duration-200">
+            Submit Rating
+        </button>
+</main>
+<!-- Bottom Navigation (From JSON Blueprint) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-2xl border-t border-outline-variant/10">
+<div class="flex justify-around items-center h-20 px-2 w-full max-w-md mx-auto">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1.5 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container/20 text-on-primary-container rounded-xl px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-lg text-label-lg">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1.5 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-lg text-label-lg">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1.5 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interactions for Star Rating
+        const starBtns = document.querySelectorAll('.star-btn');
+        const ratingLabel = document.getElementById('ratingLabel');
+        const labels = ["Deficiente", "Regular", "Aceptable", "Muy Bueno", "Excelente"];
+
+        starBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const rating = index + 1;
+                updateStars(rating);
+                ratingLabel.textContent = labels[index];
+                
+                // Add tiny bounce animation
+                btn.style.transform = 'scale(1.3)';
+                setTimeout(() => btn.style.transform = '', 200);
+                
+                // Haptic feedback simulation
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+
+        function updateStars(rating) {
+            starBtns.forEach((btn, i) => {
+                if (i < rating) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Tag Selection
+        document.querySelectorAll('.feedback-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+    </script>
+</body></html>

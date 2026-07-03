@@ -1,0 +1,13 @@
+{
+  "name": "@motosv/config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.js",
+  "exports": {
+    "./tsconfig/base": "./tsconfig/base.json",
+    "./tsconfig/expo": "./tsconfig/expo.json",
+    "./tsconfig/vite": "./tsconfig/vite.json",
+    "./eslint": "./src/eslint-preset.js",
+    "./tsconfig/*": "./tsconfig/*.json"
+  }
+}

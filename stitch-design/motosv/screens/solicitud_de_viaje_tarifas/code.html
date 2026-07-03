@@ -1,0 +1,329 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>MotoSV - Solicitar Viaje</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#62ff96",
+                    "primary-container": "#00c853",
+                    "tertiary-fixed-dim": "#00e475",
+                    "tertiary": "#006d35",
+                    "outline": "#6c7b6a",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eff1f4",
+                    "primary-fixed": "#69ff87",
+                    "on-background": "#191c1e",
+                    "outline-variant": "#bbcbb8",
+                    "surface": "#f7f9fc",
+                    "on-secondary-container": "#566475",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f2f4f7",
+                    "on-primary-container": "#004c1b",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#006e2a",
+                    "surface-container-high": "#e6e8eb",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "inverse-surface": "#2d3133",
+                    "on-primary-fixed-variant": "#00531e",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "tertiary-container": "#00c765",
+                    "primary": "#006e2a",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "on-tertiary-container": "#004c22",
+                    "background": "#f7f9fc",
+                    "on-primary-fixed": "#002108",
+                    "secondary": "#525f71",
+                    "on-tertiary-fixed": "#00210b",
+                    "error": "#ba1a1a",
+                    "surface-container": "#eceef1",
+                    "primary-fixed-dim": "#3ce36a",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "secondary-fixed": "#d6e4f9",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-bright": "#f7f9fc",
+                    "secondary-container": "#d3e1f6",
+                    "surface-variant": "#e0e3e6",
+                    "surface-dim": "#d8dadd",
+                    "inverse-primary": "#3ce36a",
+                    "on-surface-variant": "#3c4a3c",
+                    "on-surface": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "edge-margin": "20px",
+                    "lg": "24px",
+                    "sm": "12px",
+                    "gutter": "16px",
+                    "xs": "8px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "base": "4px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        
+        .glass-sheet {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ride-option-active {
+            border: 2px solid #00c853;
+            background: rgba(0, 200, 83, 0.05);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(.33); }
+            80%, 100% { opacity: 0; }
+        }
+
+        .location-dot::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: -8px;
+            width: 32px;
+            height: 32px;
+            background-color: #00c853;
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+
+        .route-path {
+            stroke-dasharray: 8;
+            animation: dash 20s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -100; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface overflow-hidden h-screen w-full select-none">
+<!-- Top App Bar (Shared Component Strategy) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-sm h-16 flex justify-between items-center px-edge-margin">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+</button>
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">MotoSV</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a Hispanic male rider in his late 20s, smiling confidently. He is wearing a sleek, modern black motorcycle jacket with subtle green accents that match the MotoSV brand colors. The background is a soft-focus urban setting at dusk, with warm city lights creating a premium bokeh effect." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy6JqI93NDyje3ILaZqyhW5PE71Fz8cqlZvNTU6XTBXYt3EkhnRHrUKvx3jRJHAjhBr0qCpG8y9MFn-2hB5MJ4w3L3wgmkMPYAnRkJkesEcT5gbGUuhTKKr9NM8HN1sJIWzU0cudI09iTLi7iGZjV6mG_AsstHn0qb8cJLqzAgBDJTHnWScxAcuFzFUW4R6QuyboC8AcTIp6ynu_z8LPC75dbHgLWNLtV22JoMFLEU0WkMxYtNxrJNibeMLZUtAnULuvDgpPEwZQ">
+</div>
+</header>
+<!-- Map Layer (Full Screen) -->
+<main class="fixed inset-0 z-0">
+<div class="relative w-full h-full">
+<!-- Map Visualization -->
+<div class="absolute inset-0 grayscale-[0.2]" data-location="San Salvador, El Salvador" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBwj_Rq_jK9MPEvfp3JlY5DWkMSke2yecTqg4rCPoty92A8HoSruCI7XJcud1ClW3c2xH6bLF2G6hlDzaxJ3YRljAj4BnW3H3sQnNfVk4kDu2_XlV2hwl3UqLu8LoZHyVdLil-hgPXXV3oClBn3i2Xk3rfOEICqzQ-TicH1csuVh5svcNYFKguYze7iGgfk6EH21nSYhguEH1wRoKKuvvb4IGtHyjMzsky4gv47CkAN8ouvJ4MRCC6PGWhKgf1T--2c-PaPdZirKg')">
+</div>
+<!-- SVG Overlay for Route -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 800">
+<!-- Origin Point -->
+<circle class="shadow-lg" cx="150" cy="200" fill="#191c1e" r="8"></circle>
+<circle cx="150" cy="200" fill="white" r="4"></circle>
+<!-- Destin Point -->
+<circle class="location-dot" cx="250" cy="450" fill="#006e2a" r="10"></circle>
+<circle cx="250" cy="450" fill="white" r="4"></circle>
+<!-- Path -->
+<path class="route-path" d="M 150 200 Q 180 300 250 450" fill="none" stroke="#00c853" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<!-- Floating Location Tooltips -->
+<div class="absolute left-[80px] top-[160px] bg-surface p-2 px-3 rounded-xl shadow-lg border border-outline-variant/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">radio_button_checked</span>
+<span class="font-label-lg text-on-surface truncate max-w-[120px]">Calle El Mirador</span>
+</div>
+<div class="absolute left-[200px] top-[480px] bg-surface p-2 px-3 rounded-xl shadow-lg border border-outline-variant/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]">location_on</span>
+<span class="font-label-lg text-on-surface truncate max-w-[120px]">Multiplaza</span>
+</div>
+</div>
+</main>
+<!-- Bottom Sheet -->
+<div class="fixed bottom-0 left-0 right-0 z-[60] h-[60%] glass-sheet rounded-t-[32px] shadow-[0_-8px_40px_rgba(0,0,0,0.12)] border-t border-white/20 transition-transform duration-500 ease-out" id="bottom-sheet">
+<!-- Grabber -->
+<div class="w-full flex justify-center pt-3 pb-2">
+<div class="w-10 h-1.5 bg-outline-variant rounded-full opacity-50"></div>
+</div>
+<div class="px-edge-margin h-full flex flex-col">
+<!-- Header -->
+<div class="py-4">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Selecciona tu viaje</h1>
+</div>
+<!-- Ride Options List -->
+<div class="flex-1 overflow-y-auto no-scrollbar space-y-3 pb-4">
+<!-- Option: MotoSV Standard -->
+<div class="ride-card flex items-center p-4 bg-surface/50 border border-outline-variant/20 rounded-2xl cursor-pointer hover:bg-surface-container-high transition-all active:scale-[0.98] ride-option-active" onclick="selectRide(this)">
+<div class="w-14 h-14 bg-primary-container/10 rounded-xl flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="motorcycle">motorcycle</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-title-lg text-title-lg text-on-surface">MotoSV Standard</span>
+<span class="font-title-lg text-title-lg text-on-surface">$2.50</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">Rápido y confiable</span>
+<span class="font-label-lg text-primary">4 min</span>
+</div>
+</div>
+</div>
+<!-- Option: MotoSV Plus -->
+<div class="ride-card flex items-center p-4 bg-surface/50 border border-outline-variant/20 rounded-2xl cursor-pointer hover:bg-surface-container-high transition-all active:scale-[0.98]" onclick="selectRide(this)">
+<div class="w-14 h-14 bg-secondary-container/10 rounded-xl flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="motorcycle">motorcycle</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-title-lg text-title-lg text-on-surface">MotoSV Plus</span>
+<span class="font-title-lg text-title-lg text-on-surface">$3.50</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">Confort y Casco extra</span>
+<span class="font-label-lg text-secondary">6 min</span>
+</div>
+</div>
+</div>
+<!-- Option: MotoSV Express -->
+<div class="ride-card flex items-center p-4 bg-surface/50 border border-outline-variant/20 rounded-2xl cursor-pointer hover:bg-surface-container-high transition-all active:scale-[0.98]" onclick="selectRide(this)">
+<div class="w-14 h-14 bg-tertiary-container/10 rounded-xl flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="motorcycle">motorcycle</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-title-lg text-title-lg text-on-surface">MotoSV Express</span>
+<span class="font-title-lg text-title-lg text-on-surface">$4.25</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">Prioridad máxima</span>
+<span class="font-label-lg text-tertiary font-bold">2 min</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Payment & Confirmation Section -->
+<div class="pt-4 pb-8 space-y-4">
+<!-- Payment Selector -->
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-on-surface/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[20px]" data-icon="payments">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-on-surface">Efectivo</span>
+<span class="font-label-md text-on-surface-variant uppercase tracking-wider">Metodo de pago</span>
+</div>
+</div>
+<button class="text-primary font-label-lg hover:underline transition-all">Cambiar</button>
+</div>
+<!-- Main CTA -->
+<button class="w-full h-14 bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-bold text-lg rounded-2xl shadow-[0_4px_24px_rgba(0,200,83,0.3)] transition-all active:scale-[0.97] flex items-center justify-center gap-3" id="confirm-btn">
+                    Confirmar MotoSV
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        function selectRide(element) {
+            // Remove active class from all
+            document.querySelectorAll('.ride-card').forEach(card => {
+                card.classList.remove('ride-option-active', 'bg-primary-container/5');
+            });
+            
+            // Add active class to selected
+            element.classList.add('ride-option-active');
+            
+            // Subtle haptic feedback simulation
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(10);
+            }
+        }
+
+        // Floating interaction for the button
+        const confirmBtn = document.getElementById('confirm-btn');
+        confirmBtn.addEventListener('click', () => {
+            confirmBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-on-primary-container" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Buscando conductor...
+            `;
+            confirmBtn.classList.remove('bg-primary-container');
+            confirmBtn.classList.add('bg-on-surface', 'text-surface');
+            
+            setTimeout(() => {
+                confirmBtn.innerHTML = '¡Conductor asignado!';
+                confirmBtn.classList.replace('bg-on-surface', 'bg-tertiary-container');
+                confirmBtn.classList.replace('text-surface', 'text-on-tertiary-container');
+            }, 2000);
+        });
+
+        // Intro animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const sheet = document.getElementById('bottom-sheet');
+            sheet.style.transform = 'translateY(100%)';
+            setTimeout(() => {
+                sheet.style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+</body></html>

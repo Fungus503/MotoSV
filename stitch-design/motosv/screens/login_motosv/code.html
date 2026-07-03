@@ -1,0 +1,244 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>MotoSV - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d8dadd",
+                        "primary-fixed": "#69ff87",
+                        "outline": "#6c7b6a",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-surface-variant": "#3c4a3c",
+                        "surface": "#f7f9fc",
+                        "on-secondary-container": "#566475",
+                        "surface-variant": "#e0e3e6",
+                        "inverse-primary": "#3ce36a",
+                        "on-error": "#ffffff",
+                        "tertiary": "#006d35",
+                        "tertiary-fixed-dim": "#00e475",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#004c1b",
+                        "background": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed-dim": "#3ce36a",
+                        "on-surface": "#191c1e",
+                        "primary": "#006e2a",
+                        "surface-container": "#eceef1",
+                        "on-secondary-fixed": "#0f1c2c",
+                        "secondary-container": "#d3e1f6",
+                        "secondary-fixed": "#d6e4f9",
+                        "surface-container-low": "#f2f4f7",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "on-background": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#62ff96",
+                        "on-tertiary-fixed": "#00210b",
+                        "primary-container": "#00c853",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#525f71",
+                        "on-secondary-fixed-variant": "#3a4859",
+                        "on-primary-fixed": "#002108",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#00531e",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#00c765",
+                        "surface-container-highest": "#e0e3e6",
+                        "secondary-fixed-dim": "#bac8dc",
+                        "surface-tint": "#006e2a",
+                        "outline-variant": "#bbcbb8",
+                        "surface-bright": "#f7f9fc",
+                        "on-tertiary-container": "#004c22",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "edge-margin": "20px",
+                        "xl": "32px",
+                        "2xl": "48px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .btn-hover-effect:active {
+            transform: scale(0.96);
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-btn {
+            @apply flex items-center justify-center w-14 h-14 rounded-full border border-outline-variant bg-surface-container-lowest transition-all hover:bg-surface-container-low active:scale-90;
+        }
+    </style>
+<style>
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            </style></head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Ambient Decoration -->
+<div class="fixed top-0 left-0 w-full h-1/2 pointer-events-none opacity-30">
+<div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-primary/20 blur-[120px]"></div>
+<div class="absolute top-[-5%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary-container/30 blur-[100px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-edge-margin py-xl relative z-10">
+<!-- Logo Section -->
+<div class="mb-xl animate-[fadeInUp_0.8s_ease-out]">
+<img alt="MotoSV Logo" class="w-32 h-32 object-contain drop-shadow-sm" src="https://lh3.googleusercontent.com/aida/AP1WRLsbDXQjpVgMRe2u3bAnp-TUx3VXlB2flPYtpfbrl7h62Io1iO6p4Y5wwH_AZnPKrWkstaUH1nRX-vWhpOll3Vjl3X0394pXbcSnf707p2KsSFHxyhyvmLM-EvGgtgahFGw9ZT5FiH9J6w17tGdUmjkhC9KR39U-84liB6I21LCbuGkLjODQ9aAyFD1H2Fs5OrPbUz-3LI3SbXv0lnGTRbRNqkpJGlSsJJdZk5RFYzO6CSBDCbbTemac">
+</div>
+<!-- Headline & Subheadline -->
+<div class="text-center mb-xl max-w-sm animate-[fadeInUp_0.9s_ease-out]">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-xs tracking-tight">
+                Bienvenido a MotoSV
+            </h1>
+<p class="font-body-lg text-body-lg text-secondary opacity-80 px-sm">
+                Tu viaje rápido y seguro comienza aquí
+            </p>
+</div>
+<!-- Login Form Container -->
+<div class="w-full max-w-md space-y-md animate-[fadeInUp_1s_ease-out]">
+<!-- Phone Input Component -->
+<div class="group flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-secondary-fixed-dim px-1">Número de teléfono</label>
+<div class="flex h-14 bg-surface-container-lowest rounded-xl border border-outline-variant focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container transition-all overflow-hidden shadow-sm">
+<!-- Country Selector Placeholder -->
+<button class="flex items-center gap-xs px-md border-r border-outline-variant/30 hover:bg-surface-container-low transition-colors">
+<span class="text-lg">🇸🇻</span>
+<span class="font-label-lg text-label-lg">+503</span>
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<input class="flex-grow bg-transparent border-none focus:ring-0 px-md font-body-lg text-body-lg text-on-surface placeholder:text-outline/50" placeholder="7000 0000" type="tel">
+</div>
+</div>
+<!-- Primary Action Button -->
+<button class="btn-hover-effect w-full h-14 bg-primary-container text-on-primary-container font-label-lg text-body-lg rounded-xl flex items-center justify-center gap-sm shadow-lg shadow-primary-container/20 transition-all">
+                Continuar
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center gap-md py-md">
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="font-label-md text-label-md text-outline uppercase tracking-widest">O continúa con</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<!-- Social Auth Section -->
+<div class="flex justify-center gap-lg px-gutter">
+<button aria-label="Google Login" class="social-btn">
+<svg class="w-6 h-6" viewBox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+</button>
+<button aria-label="Apple Login" class="social-btn">
+<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C4.3 16.92 4.14 10.27 7.24 8.24c1.55-.95 3.06-.6 4.02-.03 1 .6 1.94.55 3 0 .8-.43 2.5-.78 3.7.67-2.92 3.33-2.43 8.33.6 11.2-.28.45-.63.95-1.01 1.4v-1.2zm-4.32-15.1c-.05-2.3 2.1-4.22 4.2-4.18.23 2.45-2.14 4.38-4.2 4.18z"></path>
+</svg>
+</button>
+<button aria-label="Facebook Login" class="social-btn">
+<svg class="w-6 h-6" fill="#1877F2" viewBox="0 0 24 24">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+</svg>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer Disclaimer -->
+<footer class="w-full py-xl px-edge-margin text-center animate-[fadeInUp_1.1s_ease-out]">
+<div class="max-w-xs mx-auto">
+<p class="font-label-md text-label-md text-secondary leading-relaxed">
+                Al continuar, aceptas nuestros 
+                <a class="text-primary font-semibold hover:underline" href="#">Términos de servicio</a> 
+                y nuestra 
+                <a class="text-primary font-semibold hover:underline" href="#">Política de privacidad</a>.
+            </p>
+</div>
+</footer>
+<script>
+        // Micro-interactions and entry animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Add haptic-like visual feedback to all interactive elements
+            const interactables = document.querySelectorAll('button, a');
+            interactables.forEach(item => {
+                item.addEventListener('touchstart', () => {
+                    item.style.transition = 'transform 0.1s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+            });
+        });
+    </script>
+</body></html>

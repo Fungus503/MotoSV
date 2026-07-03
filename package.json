@@ -1,0 +1,40 @@
+{
+  "name": "motosv",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MotoSV - Plataforma de Mototaxis (El Salvador)",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:run": "vitest run",
+    "api:dev": "turbo run api:dev",
+    "api:typecheck": "turbo run api:typecheck",
+    "db:migrate": "supabase db push --linked",
+    "db:types": "supabase gen types typescript --linked > packages/api/src/database.types.ts",
+    "functions:deploy": "supabase functions deploy",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "vitest": "^2.0.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "jsdom": "^25.0.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

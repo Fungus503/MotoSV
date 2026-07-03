@@ -1,0 +1,299 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MotoSV - Programa de Referidos</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e6",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#004c1b",
+                    "secondary-fixed": "#d6e4f9",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "surface": "#f7f9fc",
+                    "surface-container": "#eceef1",
+                    "secondary-container": "#d3e1f6",
+                    "on-secondary-container": "#566475",
+                    "tertiary": "#006d35",
+                    "tertiary-fixed": "#62ff96",
+                    "outline": "#6c7b6a",
+                    "on-tertiary-container": "#004c22",
+                    "surface-bright": "#f7f9fc",
+                    "on-surface": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006e2a",
+                    "outline-variant": "#bbcbb8",
+                    "on-secondary-fixed-variant": "#3a4859",
+                    "on-primary-fixed": "#002108",
+                    "primary-container": "#00c853",
+                    "inverse-surface": "#2d3133",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#3c4a3c",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#3ce36a",
+                    "tertiary-fixed-dim": "#00e475",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#3ce36a",
+                    "background": "#f7f9fc",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-dim": "#d8dadd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#00c765",
+                    "secondary": "#525f71",
+                    "inverse-on-surface": "#eff1f4",
+                    "primary-fixed": "#69ff87",
+                    "surface-container-low": "#f2f4f7",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#0f1c2c",
+                    "surface-container-high": "#e6e8eb",
+                    "on-tertiary-fixed": "#00210b",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#bac8dc",
+                    "on-primary-fixed-variant": "#00531e",
+                    "primary": "#006e2a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "2xl": "48px",
+                    "xs": "8px",
+                    "lg": "24px",
+                    "edge-margin": "20px",
+                    "sm": "12px"
+            },
+            "fontFamily": {
+                    "display-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-1px", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .thumb-zone {
+            padding-bottom: env(safe-area-inset-bottom, 32px);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex items-center justify-between px-edge-margin h-14 w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 hover:bg-primary-container/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary">Referidos</h1>
+</div>
+<button class="active:scale-95 duration-200 hover:bg-primary-container/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="pt-20 pb-32 px-edge-margin space-y-8 max-w-lg mx-auto">
+<!-- Hero Section: Illustration & Value Proposition -->
+<section class="text-center space-y-4">
+<div class="relative w-full aspect-[4/3] flex items-center justify-center">
+<!-- Background Blob/Light -->
+<div class="absolute inset-0 bg-primary-container/10 blur-3xl rounded-full scale-75"></div>
+<!-- Illustration Placeholder -->
+<div class="animate-float relative z-10 w-full h-full flex items-center justify-center">
+<div class="w-72 h-56 bg-contain bg-center bg-no-repeat" data-alt="A high-end, futuristic 3D motorcycle illustration floating in mid-air with a glossy green finish. The background is a clean, minimalist studio setting with soft volumetric lighting and a premium light-mode aesthetic. Motion trails and subtle digital energy waves in MotoSV green and deep navy surround the vehicle to evoke speed and controlled velocity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0zP03JNEHrwwt1ME_M-hJH65dXjRiYVEijOSZNYHgpGX6D_zssrO3rpNWaL_k6lghhvJfXr5BFAokmbaH7okWOJbfOkSBeHcrqfeSKCwBrME74qE2xNy7FXDjkTn_SOAOVUX2LCBbM437laswS14a896n9dcTaUJ5b6XHt6eVaWK3piEDIR2SmXROV4Dv-CLEMGXUbOk_f4KZ2jgrHqnprnVIIBD7H7kX-QcuncYLX63moVVi_ymAwPlFZPu5oRe-WGE144DFzQ')">
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<h2 class="font-display-md text-display-md text-primary tracking-tighter">Comparte el camino</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xs mx-auto">
+                    Invita a un amigo y gana $2.00 en tu próximo viaje por cada referido exitoso.
+                </p>
+</div>
+</section>
+<!-- Referral Code Card -->
+<section class="glass-effect rounded-2xl p-6 shadow-[0px_4px_20px_rgba(13,27,42,0.08)] border border-outline-variant/20">
+<div class="text-center space-y-4">
+<span class="font-label-lg text-label-lg text-secondary uppercase tracking-widest">Tu código único</span>
+<div class="flex items-center justify-between bg-surface-container rounded-xl p-4 group">
+<span class="font-display-md text-display-md text-on-surface font-bold tracking-widest uppercase" id="referralCode">MOTO-SV-2024</span>
+<button class="bg-primary text-on-primary p-3 rounded-xl active:scale-90 transition-transform shadow-sm" onclick="copyCode()">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+</div>
+<div class="text-primary font-label-md text-label-md opacity-0 transition-opacity" id="copyFeedback">¡Código copiado al portapapeles!</div>
+</div>
+</section>
+<!-- Share Buttons -->
+<section class="space-y-4">
+<h3 class="font-title-lg text-title-lg text-on-surface pl-2">Compartir vía</h3>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 bg-[#25D366] text-white py-4 rounded-2xl font-label-lg text-label-lg-mobile shadow-md active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                    WhatsApp
+                </button>
+<button class="flex items-center justify-center gap-3 bg-[#0084FF] text-white py-4 rounded-2xl font-label-lg text-label-lg-mobile shadow-md active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+                    Messenger
+                </button>
+<button class="col-span-2 flex items-center justify-center gap-3 bg-secondary text-on-secondary py-4 rounded-2xl font-label-lg text-label-lg-mobile shadow-md active:scale-95 transition-all">
+<span class="material-symbols-outlined">share</span>
+                    Más opciones
+                </button>
+</div>
+</section>
+<!-- Progress Tracker -->
+<section class="glass-effect rounded-2xl p-6 shadow-[0px_4px_20px_rgba(13,27,42,0.08)] border border-outline-variant/20 space-y-6">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<h3 class="font-title-lg text-title-lg text-on-surface">Tu meta actual</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Próxima recompensa: <strong>$5.00 Extra</strong></p>
+</div>
+<div class="text-right">
+<span class="font-display-md text-display-md text-primary">3</span>
+<span class="font-title-lg text-title-lg text-on-surface-variant">/ 5</span>
+</div>
+</div>
+<div class="relative pt-1">
+<div class="overflow-hidden h-3 text-xs flex rounded-full bg-surface-container-highest">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-container transition-all duration-1000" style="width:60%"></div>
+</div>
+<div class="flex justify-between mt-3">
+<span class="font-label-md text-label-md text-on-surface-variant">3 amigos unidos</span>
+<span class="font-label-md text-label-md text-primary font-bold">Faltan 2</span>
+</div>
+</div>
+</section>
+<!-- History/Info Section (Bento Style) -->
+<section class="grid grid-cols-2 gap-4">
+<div class="glass-effect p-4 rounded-2xl border border-outline-variant/10 flex flex-col justify-between aspect-square">
+<span class="material-symbols-outlined text-primary-container scale-125">account_balance_wallet</span>
+<div>
+<span class="block font-label-md text-label-md text-on-surface-variant uppercase">Ganancias totales</span>
+<span class="font-title-lg text-title-lg text-on-surface font-bold">$12.00</span>
+</div>
+</div>
+<div class="glass-effect p-4 rounded-2xl border border-outline-variant/10 flex flex-col justify-between aspect-square">
+<span class="material-symbols-outlined text-tertiary scale-125">history</span>
+<div>
+<span class="block font-label-md text-label-md text-on-surface-variant uppercase">Historial</span>
+<span class="font-label-lg text-label-lg text-primary">Ver detalles</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-2 pb-8 px-4 bg-surface/85 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150">
+<span class="material-symbols-outlined">motorcycle</span>
+<span class="font-label-lg text-label-lg-mobile">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_offer</span>
+<span class="font-label-lg text-label-lg-mobile">Promos</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-lg text-label-lg-mobile">Wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg-mobile">Profile</span>
+</button>
+</nav>
+<script>
+        function copyCode() {
+            const code = document.getElementById('referralCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const feedback = document.getElementById('copyFeedback');
+                feedback.classList.remove('opacity-0');
+                feedback.classList.add('opacity-100');
+                
+                // Haptic simulation
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(50);
+                }
+
+                setTimeout(() => {
+                    feedback.classList.add('opacity-0');
+                    feedback.classList.remove('opacity-100');
+                }, 2000);
+            });
+        }
+
+        // Simple scroll reveal effect for sections
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = "0";
+            section.style.transform = "translateY(20px)";
+            section.style.transition = "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
+            observer.observe(section);
+        });
+    </script>
+</body></html>

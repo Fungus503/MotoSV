@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f9fc;
+  --bg-card: #ffffff;
+  --text-primary: #191c1e;
+  --text-secondary: #6c7b6a;
+  --border-color: #e0e3e6;
+}
+
+.dark {
+  --bg-primary: #0B0F14;
+  --bg-secondary: #121821;
+  --bg-card: #1A1E23;
+  --text-primary: #E0E3E6;
+  --text-secondary: #9ca3af;
+  --border-color: #2A2E34;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.sidebar-gradient {
+  background: linear-gradient(178.98deg, #199675 -453.29%, #212121 91.53%);
+}
+
+.sidebar-menu-list.active > .sidebar-header {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.sidebar-menu-list .sidebar-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.sidebar-menu-list.open .sidebar-submenu {
+  max-height: 500px;
+}
+
+.sidebar-submenu a {
+  display: flex;
+  align-items: center;
+  padding: 7px 16px 7px 44px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  border-radius: 6px;
+  margin: 1px 4px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.sidebar-submenu a::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-submenu a:last-child::before {
+  bottom: 50%;
+}
+
+.sidebar-submenu a::after {
+  content: '';
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  transform: translateY(-50%);
+  transition: all 0.2s;
+}
+
+.sidebar-submenu a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-submenu a:hover::after {
+  background: #199675;
+  border-color: #199675;
+}
+
+.sidebar-submenu a.\!text-white::after {
+  background: #199675;
+  border-color: #199675;
+}
+
+.sidebar-submenu a .badge {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar-scroll {
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  display: none;
+}
