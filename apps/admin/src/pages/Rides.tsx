@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Search } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { useAllRides } from '../lib/queries'
-import { StatusBadge } from '../components'
+import { StatusBadge } from '../components/StatusBadge'
 import { format } from 'date-fns'
 import { es, enUS } from 'date-fns/locale'
 
@@ -50,13 +50,13 @@ export function RidesPage() {
         <div className="relative">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder={t('rides.search')} name="search" autoComplete="off"
+            placeholder={t('rides.search')} name="search" autoComplete="off" aria-label={t('rides.search')}
             className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 w-64" />
         </div>
       </div>
       <div className="flex gap-2 mb-4 flex-wrap">
         {statusFilters(t).map((f) => (
-          <button key={f.value} onClick={() => updateFilter(f.value)}
+          <button type="button" key={f.value} onClick={() => updateFilter(f.value)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               statusFilter === f.value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}>{f.label}</button>
@@ -90,3 +90,4 @@ export function RidesPage() {
     </div>
   )
 }
+

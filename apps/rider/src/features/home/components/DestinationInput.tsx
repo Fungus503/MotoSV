@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Pressable } from 'react-native'
 
 interface DestinationInputProps {
   pickupAddress: string

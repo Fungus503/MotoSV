@@ -4,16 +4,16 @@ import { router } from 'expo-router'
 import { GlassCard, Button } from '@motosv/ui'
 import { OSMMap } from '../../../../src/lib/OSMMap'
 
+function handleAccept() {
+  router.push('/ride/navigation')
+}
+
+function handleDecline() {
+  router.back()
+}
+
 export function IncomingRideScreen() {
   const insets = useSafeAreaInsets()
-
-  function handleAccept() {
-    router.push('/ride/navigation')
-  }
-
-  function handleDecline() {
-    router.back()
-  }
 
   return (
     <View className="flex-1 bg-surface">

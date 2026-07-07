@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, ActivityIndicator } from 'react-native'
+import { Pressable, Text, ActivityIndicator } from 'react-native'
 
 interface ButtonProps {
   title: string
@@ -40,13 +40,13 @@ export function Button({
   className = '',
 }: ButtonProps) {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
       disabled={disabled || loading}
       className={`${variantStyles[variant]} ${sizeStyles[size]} items-center justify-center flex-row ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {loading && <ActivityIndicator className="mr-2" color={variant === 'primary' ? '#ffffff' : '#006e2a'} />}
       <Text className={`${textStyles[variant]} font-semibold text-center`}>{title}</Text>
-    </TouchableOpacity>
+    </Pressable>
   )
 }

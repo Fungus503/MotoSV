@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -55,7 +55,7 @@ export function AdminSessionsPage() {
             </span>
           )},
           { key: '', label: '', width: 'w-16', render: (r: any) => r.is_active ? (
-            <button onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('adminSessions.terminateConfirm'))) await terminateMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }}
+            <button type="button" onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('adminSessions.terminateConfirm'))) await terminateMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }}
               className="p-1.5 text-red-600 hover:bg-red-50 rounded" title={t('adminSessions.terminate')}>
               <LogOut size={14} />
             </button>
@@ -68,3 +68,4 @@ export function AdminSessionsPage() {
     </div>
   )
 }
+

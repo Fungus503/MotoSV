@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable, StatusBadge } from '../components'
+import { DataTable } from '../components/DataTable'
+import { StatusBadge } from '../components/StatusBadge'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
@@ -36,11 +37,12 @@ export function WithdrawRequestsPage() {
         { key: 'created_at', label: t('withdrawRequests.date'), sortable: true, render: (w: any) => new Date(w.created_at).toLocaleDateString(i18n.language) },
         { key: 'actions', label: '', width: 'w-48', render: (w: any) => w.status === 'pending' ? (
           <div className="flex gap-1">
-            <button onClick={(e) => { e.stopPropagation(); updateMutation.mutateAsync({ id: w.id, status: 'approved' }) }} className="px-2 py-1 text-xs bg-green-50 text-green-600 rounded hover:bg-green-100">{t('withdrawRequests.approve')}</button>
-            <button onClick={(e) => { e.stopPropagation(); updateMutation.mutateAsync({ id: w.id, status: 'rejected' }) }} className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">{t('withdrawRequests.reject')}</button>
+            <button type="button" onClick={(e) => { e.stopPropagation(); updateMutation.mutateAsync({ id: w.id, status: 'approved' }) }} className="px-2 py-1 text-xs bg-green-50 text-green-600 rounded hover:bg-green-100">{t('withdrawRequests.approve')}</button>
+            <button type="button" onClick={(e) => { e.stopPropagation(); updateMutation.mutateAsync({ id: w.id, status: 'rejected' }) }} className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">{t('withdrawRequests.reject')}</button>
           </div>
         ) : <span className="text-xs text-gray-400">—</span> },
       ]} data={data ?? []} loading={isLoading} searchable />
     </div>
   )
 }
+

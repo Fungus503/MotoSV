@@ -6,6 +6,8 @@ import { handleError } from '../lib/errors'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Mail, Calendar, Shield, Users, Car, Activity, CheckCircle, X, Camera } from 'lucide-react'
 
+function validateEmail(e: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) }
+
 function UrlModal({ title, currentUrl, onSave, onDelete, onClose }: {
   title: string; currentUrl: string; onSave: (url: string) => void; onDelete?: () => void; onClose: () => void
 }) {
@@ -28,16 +30,16 @@ function UrlModal({ title, currentUrl, onSave, onDelete, onClose }: {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center" onClick={onClose} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClose() }}>
       <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-gray-900">{title}</h3>
-          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg"><X size={18} /></button>
+          <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg"><X size={18} /></button>
         </div>
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.imageUrl')}</label>
-            <input value={url} onChange={(e) => handleUrlChange(e.target.value)} placeholder="https://ejemplo.com/imagen.jpg"
+            <label htmlFor="profile-url" className="block text-sm font-medium text-gray-700 mb-1">{t('profile.imageUrl')}</label>
+            <input id="profile-url" value={url} onChange={(e) => handleUrlChange(e.target.value)} placeholder="https://ejemplo.com/imagen.jpg"
               className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
             {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
           </div>
@@ -50,11 +52,11 @@ function UrlModal({ title, currentUrl, onSave, onDelete, onClose }: {
           <div className="text-xs text-gray-400">{t('profile.urlOnlySaved')}</div>
           <div className="flex gap-3 pt-1">
             {currentUrl && onDelete && (
-              <button onClick={onDelete} className="px-4 py-2.5 border border-red-200 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50">{t('common.delete')}</button>
+              <button type="button" onClick={onDelete} className="px-4 py-2.5 border border-red-200 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50">{t('common.delete')}</button>
             )}
             <div className="flex-1" />
-            <button onClick={onClose} className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
-            <button onClick={handleSave} className="px-6 py-2.5 bg-[#199675] text-white rounded-lg text-sm font-medium hover:bg-[#157a5e]">{t('profile.save')}</button>
+            <button type="button" onClick={onClose} className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
+            <button type="button" onClick={handleSave} className="px-6 py-2.5 bg-[#199675] text-white rounded-lg text-sm font-medium hover:bg-[#157a5e]">{t('profile.save')}</button>
           </div>
         </div>
       </div>
@@ -93,12 +95,11 @@ export function ProfilePage() {
   useEffect(() => { return () => { mountedRef.current = false } }, [])
   useEffect(() => {
     if (profile) { setName(profile.full_name ?? ''); setPhone(profile.phone ?? '') }
+  }, [profile])
+  useEffect(() => {
     if (session?.user?.email) setEmail(session.user.email)
     if (session?.user?.last_sign_in_at) setLastSignIn(new Date(session.user.last_sign_in_at).toLocaleString(i18n.language))
-  }, [profile, session])
-  useEffect(() => { if (message) setMessage('') }, [activeTab])
-
-  function validateEmail(e: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) }
+  }, [session, i18n.language])
 
   async function saveImageUrl(field: 'avatar_url' | 'cover_url', url: string) {
     const { data: user } = await supabase.auth.getUser()
@@ -155,7 +156,7 @@ export function ProfilePage() {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
         </div>
-        <button onClick={() => setEditField('cover')}
+        <button type="button" onClick={() => setEditField('cover')}
           className="absolute top-4 right-4 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-105 z-10">
           <Camera size={18} className="text-gray-700" />
         </button>
@@ -163,7 +164,7 @@ export function ProfilePage() {
         {/* Avatar */}
         <div className="absolute -bottom-20 left-12">
           <div className="relative group/avatar">
-            <button onClick={() => setEditField('avatar')}
+            <button type="button" onClick={() => setEditField('avatar')}
               className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 hover:bg-black/30 rounded-full transition-all">
               <div className="w-11 h-11 bg-white/90 rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover/avatar:opacity-100 transition-all scale-0 group-hover/avatar:scale-100">
                 <Camera size={18} className="text-gray-700" />
@@ -211,7 +212,7 @@ export function ProfilePage() {
 
       <div className="flex gap-1 mb-6 border-b border-gray-200">
         {[{ id: 'overview', label: t('profile.overview') }, { id: 'settings', label: t('profile.settings') }].map((tab) => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+          <button type="button" key={tab.id} onClick={() => { setActiveTab(tab.id); setMessage('') }}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.id ? 'border-[#199675] text-[#199675]' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}>{tab.label}</button>
@@ -268,18 +269,18 @@ export function ProfilePage() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.fullName')}</label>
-                <input value={name} onChange={(e) => setName(e.target.value)}
+                <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700 mb-1">{t('profile.fullName')}</label>
+                <input id="profile-name" value={name} onChange={(e) => setName(e.target.value)}
                   className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.phone')}</label>
-                <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+503 7000 0000"
+                <label htmlFor="profile-phone" className="block text-sm font-medium text-gray-700 mb-1">{t('profile.phone')}</label>
+                <input id="profile-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+503 7000 0000"
                   className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.email')}</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                <label htmlFor="profile-email" className="block text-sm font-medium text-gray-700 mb-1">{t('profile.email')}</label>
+                <input id="profile-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
               </div>
             </div>
@@ -288,13 +289,13 @@ export function ProfilePage() {
               <h4 className="text-sm font-medium text-gray-700 mb-3">{t('profile.changePassword')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">{t('profile.newPassword')}</label>
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
+                  <label htmlFor="profile-new-password" className="block text-xs text-gray-500 mb-1">{t('profile.newPassword')}</label>
+                  <input id="profile-new-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
                     className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">{t('profile.confirmPassword')}</label>
-                  <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••"
+                  <label htmlFor="profile-confirm-password" className="block text-xs text-gray-500 mb-1">{t('profile.confirmPassword')}</label>
+                  <input id="profile-confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••"
                     className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#199675]/20 focus:border-[#199675]" />
                 </div>
               </div>
@@ -331,3 +332,4 @@ export function ProfilePage() {
     </div>
   )
 }
+

@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard, Loading } from '@motosv/ui'
@@ -16,6 +17,29 @@ export function WalletScreen() {
   const { data: session } = useSession()
   const { data: wallet, isLoading } = useWallet(session?.user?.id)
   const { data: transactions } = useWalletTransactions(session?.user?.id)
+
+  const renderTransaction = useCallback(({ item }: { item: any }) => {
+    const info = typeLabels[item.type] ?? { label: item.type, icon: '📄' }
+    return (
+      <GlassCard className="mb-2 p-4">
+        <View className="flex-row items-center">
+          <Text className="text-2xl mr-3">{info.icon}</Text>
+          <View className="flex-1">
+            <Text className="text-on-surface font-medium">{info.label}</Text>
+            <Text className="text-onSurfaceVariant text-xs">
+              {new Date(item.created_at).toLocaleDateString('es')}
+            </Text>
+            {item.description && (
+              <Text className="text-onSurfaceVariant text-xs mt-0.5">{item.description}</Text>
+            )}
+          </View>
+          <Text className={`font-bold text-lg ${item.amount >= 0 ? 'text-primary' : 'text-error'}`}>
+            {item.amount >= 0 ? '+' : ''}${Number(item.amount).toFixed(2)}
+          </Text>
+        </View>
+      </GlassCard>
+    )
+  }, [])
 
   if (isLoading) return <Loading fullScreen />
 
@@ -38,28 +62,7 @@ export function WalletScreen() {
         <FlatList
           data={transactions}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            const info = typeLabels[item.type] ?? { label: item.type, icon: '📄' }
-            return (
-              <GlassCard className="mb-2 p-4">
-                <View className="flex-row items-center">
-                  <Text className="text-2xl mr-3">{info.icon}</Text>
-                  <View className="flex-1">
-                    <Text className="text-on-surface font-medium">{info.label}</Text>
-                    <Text className="text-onSurfaceVariant text-xs">
-                      {new Date(item.created_at).toLocaleDateString('es')}
-                    </Text>
-                    {item.description && (
-                      <Text className="text-onSurfaceVariant text-xs mt-0.5">{item.description}</Text>
-                    )}
-                  </View>
-                  <Text className={`font-bold text-lg ${item.amount >= 0 ? 'text-primary' : 'text-error'}`}>
-                    {item.amount >= 0 ? '+' : ''}${Number(item.amount).toFixed(2)}
-                  </Text>
-                </View>
-              </GlassCard>
-            )
-          }}
+          renderItem={renderTransaction}
           ListEmptyComponent={
             <View className="py-12 items-center">
               <Text className="text-onSurfaceVariant text-base">Sin movimientos</Text>

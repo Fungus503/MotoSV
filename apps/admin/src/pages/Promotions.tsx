@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -76,7 +76,7 @@ export function PromotionsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-gray-900">{t('promotions.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('promotions.description')}</p></div>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('promotions.addBtn')}</button>
+        <button type="button" onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('promotions.addBtn')}</button>
       </div>
       <DataTable
         columns={[
@@ -90,8 +90,8 @@ export function PromotionsPage() {
           { key: 'is_active', label: t('promotions.active'), render: (r: any) => <span className={`text-sm ${r.is_active ? 'text-green-600' : 'text-red-500'}`}>{r.is_active ? t('promotions.yes') : t('promotions.no')}</span> },
           { key: '', label: '', width: 'w-24', render: (r: any) => (
             <div className="flex items-center gap-1">
-              <button onClick={(e) => { e.stopPropagation(); handleEdit(r) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Pencil size={14} /></button>
-              <button onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }} className="p-1.5 text-red-600 hover:bg-red-50 rounded"><Trash2 size={14} /></button>
+              <button type="button" onClick={(e) => { e.stopPropagation(); handleEdit(r) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Pencil size={14} /></button>
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }} className="p-1.5 text-red-600 hover:bg-red-50 rounded"><Trash2 size={14} /></button>
             </div>
           )},
         ]}
@@ -100,30 +100,30 @@ export function PromotionsPage() {
         searchable
       />
       {showForm && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => { setShowForm(false); setEditingPromo(null) }}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => { setShowForm(false); setEditingPromo(null) }} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setShowForm(false); setEditingPromo(null) } }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-lg mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{editingPromo ? t('common.edit') : t('common.add')} {t('promotions.title')}</h2>
             <form onSubmit={handleSave} className="space-y-3 max-h-[70vh] overflow-y-auto">
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.code')} *</label><input value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.discountType')}</label>
-                  <select value={form.discount_type} onChange={(e) => setForm({ ...form, discount_type: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                <div><label htmlFor="promo-code" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.code')} *</label><input id="promo-code" value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                <div><label htmlFor="promo-type" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.discountType')}</label>
+                  <select id="promo-type" value={form.discount_type} onChange={(e) => setForm({ ...form, discount_type: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
                     <option value="percentage">{t('promotions.percentage')}</option>
                     <option value="fixed">{t('promotions.fixed')}</option>
                   </select></div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.discountValue')} *</label><input type="number" step="0.01" value={form.discount_value} onChange={(e) => setForm({ ...form, discount_value: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.maxRedemptions')}</label><input type="number" value={form.max_redemptions} onChange={(e) => setForm({ ...form, max_redemptions: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="promo-value" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.discountValue')} *</label><input id="promo-value" type="number" step="0.01" value={form.discount_value} onChange={(e) => setForm({ ...form, discount_value: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                <div><label htmlFor="promo-redemptions" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.maxRedemptions')}</label><input id="promo-redemptions" type="number" value={form.max_redemptions} onChange={(e) => setForm({ ...form, max_redemptions: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               </div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.descriptionLabel')}</label><textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" rows={2} /></div>
+              <div><label htmlFor="promo-desc" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.descriptionLabel')}</label><textarea id="promo-desc" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" rows={2} /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.minFare')}</label><input type="number" step="0.01" value={form.min_fare} onChange={(e) => setForm({ ...form, min_fare: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.maxDiscount')}</label><input type="number" step="0.01" value={form.max_discount} onChange={(e) => setForm({ ...form, max_discount: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="promo-min-fare" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.minFare')}</label><input id="promo-min-fare" type="number" step="0.01" value={form.min_fare} onChange={(e) => setForm({ ...form, min_fare: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="promo-max-discount" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.maxDiscount')}</label><input id="promo-max-discount" type="number" step="0.01" value={form.max_discount} onChange={(e) => setForm({ ...form, max_discount: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.startsAt')}</label><input type="datetime-local" value={form.starts_at} onChange={(e) => setForm({ ...form, starts_at: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.expiresAt')} *</label><input type="datetime-local" value={form.expires_at} onChange={(e) => setForm({ ...form, expires_at: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                <div><label htmlFor="promo-starts" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.startsAt')}</label><input id="promo-starts" type="datetime-local" value={form.starts_at} onChange={(e) => setForm({ ...form, starts_at: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="promo-expires" className="block text-sm font-medium text-gray-700 mb-1">{t('promotions.expiresAt')} *</label><input id="promo-expires" type="datetime-local" value={form.expires_at} onChange={(e) => setForm({ ...form, expires_at: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
               </div>
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} className="rounded border-gray-300" /> {t('common.active')}</label>
               <div className="flex gap-3 pt-2">
@@ -137,3 +137,5 @@ export function PromotionsPage() {
     </div>
   )
 }
+
+

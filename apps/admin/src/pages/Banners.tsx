@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -43,7 +43,7 @@ export function BannersPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-gray-900">{t('banners.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('banners.description')}</p></div>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('banners.addBtn')}</button>
+        <button type="button" onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('banners.addBtn')}</button>
       </div>
       <DataTable columns={[
         { key: 'title', label: t('banners.titleLabel'), sortable: true },
@@ -52,20 +52,20 @@ export function BannersPage() {
         { key: 'sort_order', label: t('banners.order'), sortable: true },
         { key: 'is_active', label: t('banners.active'), render: (b: any) => <span className={b.is_active ? 'text-green-600' : 'text-red-500'}>{b.is_active ? t('common.yes') : t('common.no')}</span> },
         { key: '', label: '', width: 'w-16', render: (b: any) => (
-          <button onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(b.id); } catch (e) { alert(handleError(e)) } }} className="p-1.5 text-red-600 hover:bg-red-50 rounded"><Trash2 size={14} /></button>
+          <button type="button" onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(b.id); } catch (e) { alert(handleError(e)) } }} className="p-1.5 text-red-600 hover:bg-red-50 rounded"><Trash2 size={14} /></button>
         )},
       ]} data={banners ?? []} loading={isLoading} searchable />
       {showForm && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowForm(false) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{t('banners.addTitle')}</h2>
             <form onSubmit={handleSave} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('banners.titleLabel')}</label><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('banners.imageUrl')}</label><input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="banner-title" className="block text-sm font-medium text-gray-700 mb-1">{t('banners.titleLabel')}</label><input id="banner-title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="banner-image-url" className="block text-sm font-medium text-gray-700 mb-1">{t('banners.imageUrl')}</label><input id="banner-image-url" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('banners.linkUrl')}</label><input value={form.link_url} onChange={(e) => setForm({ ...form, link_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('banners.position')}</label>
-                  <select value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                <div><label htmlFor="banner-link-url" className="block text-sm font-medium text-gray-700 mb-1">{t('banners.linkUrl')}</label><input id="banner-link-url" value={form.link_url} onChange={(e) => setForm({ ...form, link_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="banner-position" className="block text-sm font-medium text-gray-700 mb-1">{t('banners.position')}</label>
+                  <select id="banner-position" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
                     <option value="home">{t('banners.home')}</option><option value="services">{t('banners.services')}</option><option value="promotions">{t('banners.promotions')}</option>
                   </select></div>
               </div>
@@ -80,3 +80,5 @@ export function BannersPage() {
     </div>
   )
 }
+
+

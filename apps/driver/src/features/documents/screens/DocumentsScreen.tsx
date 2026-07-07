@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard, Loading } from '@motosv/ui'
 import { useSession, useDriverDocuments } from '@motosv/api'
@@ -38,7 +38,7 @@ export function DocumentsScreen() {
           const doc = documents?.find((d) => d.document_type === type)
           return (
             <GlassCard key={type} className="p-4 mb-3">
-              <TouchableOpacity className="flex-row items-center">
+              <Pressable className="flex-row items-center">
                 <View className="flex-1">
                   <Text className="text-on-surface font-medium">{label}</Text>
                   <Text className={`text-sm mt-1 ${doc ? (statusColors[doc.status] ?? '') : 'text-onSurfaceVariant'}`}>
@@ -48,7 +48,7 @@ export function DocumentsScreen() {
                 <Text className="text-primary text-sm">
                   {doc ? 'Ver' : 'Subir'}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </GlassCard>
           )
         })}

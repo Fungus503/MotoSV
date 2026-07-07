@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard } from '@motosv/ui'
 import { useSession, useProfile, useDriverActiveRide } from '@motosv/api'
@@ -46,14 +46,14 @@ export function DriverHomeScreen() {
       </View>
 
       <View className="px-4 pb-4" style={{ paddingBottom: insets.bottom + 16 }}>
-        <TouchableOpacity
+        <Pressable
           onPress={() => setIsOnline(!isOnline)}
           className={`w-full py-4 rounded-2xl items-center ${isOnline ? 'bg-surfaceContainerHigh' : 'bg-primary'}`}
         >
           <Text className={`text-lg font-bold ${isOnline ? 'text-onSurfaceVariant' : 'text-onPrimary'}`}>
             {isOnline ? 'Poner fuera de línea' : 'Ponerse en línea'}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   )

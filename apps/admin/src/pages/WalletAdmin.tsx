@@ -1,25 +1,45 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
+import { useSearchParams } from 'react-router-dom'
+
+const ROLE_LABELS: Record<string, string> = {
+  rider: 'Pasajeros',
+  driver: 'Conductores',
+  fleet_manager: 'Flotillas',
+}
 
 export function WalletAdminPage() {
   const { t, i18n } = useTranslation()
+  const [searchParams] = useSearchParams()
+  const roleFilter = searchParams.get('role')
+
   const { data: wallets, isLoading } = useQuery({
-    queryKey: ['admin-wallets'],
+    queryKey: ['admin-wallets', roleFilter],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('wallets')
-        .select('*, user:user_id(full_name, phone, role)')
+        .select('*, user:user_id!inner(full_name, phone, role)')
         .order('balance', { ascending: false })
+
+      if (roleFilter) {
+        query = query.eq('user.role', roleFilter)
+      }
+
+      const { data, error } = await query
       if (error) throw error; return data ?? []
     },
   })
 
+  const title = roleFilter
+    ? `${t('wallet.title')} — ${ROLE_LABELS[roleFilter] ?? roleFilter}`
+    : t('wallet.title')
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-2xl font-bold text-gray-900">{t('wallet.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('wallet.description')}</p></div>
+        <div><h1 className="text-2xl font-bold text-gray-900">{title}</h1><p className="text-sm text-gray-400 mt-0.5">{t('wallet.description')}</p></div>
       </div>
       <DataTable
         columns={[
@@ -37,3 +57,4 @@ export function WalletAdminPage() {
     </div>
   )
 }
+

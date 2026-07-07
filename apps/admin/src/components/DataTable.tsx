@@ -46,7 +46,7 @@ export function DataTable<T extends Record<string, any>>({
 
   const sorted = useMemo(() => {
     if (!sortKey) return filtered
-    return [...filtered].sort((a, b) => {
+    return filtered.toSorted((a, b) => {
       const aVal = a[sortKey]
       const bVal = b[sortKey]
       if (aVal == null) return 1
@@ -89,6 +89,7 @@ export function DataTable<T extends Record<string, any>>({
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(0) }}
               placeholder={finalSearchPlaceholder} name="search" autoComplete="off"
+              aria-label={finalSearchPlaceholder}
               className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
           </div>
         </div>
@@ -100,7 +101,7 @@ export function DataTable<T extends Record<string, any>>({
               {columns.map((col) => (
                 <th key={col.key} className={`text-left px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider ${col.width ?? ''}`}>
                   {col.sortable ? (
-                    <button onClick={() => handleSort(col.key)} className="flex items-center gap-1 hover:text-gray-700 transition-colors">
+                    <button type="button" onClick={() => handleSort(col.key)} className="flex items-center gap-1 hover:text-gray-700 transition-colors">
                       {col.label}
                       {sortKey === col.key ? (
                         sortDir === 'asc' ? <ChevronUp size={12} /> : <ChevronDown size={12} />
@@ -119,7 +120,10 @@ export function DataTable<T extends Record<string, any>>({
             {paged.map((item, idx) => (
               <tr key={item.id ?? idx}
                 className={`border-b border-gray-50 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
-                onClick={() => onRowClick?.(item)}>
+                onClick={() => onRowClick?.(item)}
+                role={onRowClick ? "button" : undefined}
+                tabIndex={onRowClick ? 0 : undefined}
+                onKeyDown={onRowClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') onRowClick(item) } : undefined}>
                 {columns.map((col) => (
                   <td key={col.key} className="px-4 py-3 text-sm text-gray-900">
                     {col.render ? col.render(item) : (item[col.key] ?? '—')}
@@ -137,7 +141,7 @@ export function DataTable<T extends Record<string, any>>({
         <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
           <span className="text-sm text-gray-400">{t('datatable.page') + ' ' + (page + 1) + ' ' + t('datatable.of') + ' ' + totalPages}</span>
           <div className="flex items-center gap-2">
-            <button onClick={() => setPage(Math.max(0, page - 1))} disabled={page === 0}
+            <button type="button" onClick={() => setPage(Math.max(0, page - 1))} disabled={page === 0}
               className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30 text-gray-500">
               <ChevronLeft size={16} />
             </button>
@@ -145,13 +149,13 @@ export function DataTable<T extends Record<string, any>>({
               const start = Math.max(0, Math.min(page - 2, totalPages - 5))
               const p = start + i
               return (
-                <button key={p} onClick={() => setPage(p)}
+                <button type="button" key={p} onClick={() => setPage(p)}
                   className={`w-8 h-8 rounded text-sm ${page === p ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-100'}`}>
                   {p + 1}
                 </button>
               )
             })}
-            <button onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1}
+            <button type="button" onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1}
               className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30 text-gray-500">
               <ChevronRight size={16} />
             </button>

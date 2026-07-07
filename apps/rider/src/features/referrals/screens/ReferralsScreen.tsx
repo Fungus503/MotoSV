@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { View, Text, FlatList, Share } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard, Button, Loading } from '@motosv/ui'
@@ -8,6 +9,29 @@ export function ReferralsScreen() {
   const { data: session } = useSession()
   const { data: refCode } = useReferralCode(session?.user?.id)
   const { data: referrals } = useReferrals(session?.user?.id)
+
+  const renderReferral = useCallback(({ item }: { item: any }) => (
+    <GlassCard className="mb-2 p-4">
+      <View className="flex-row items-center">
+        <View className="w-10 h-10 bg-primaryContainer rounded-full items-center justify-center mr-3">
+          <Text className="text-onPrimaryContainer font-bold">
+            {item.referred?.full_name?.charAt(0) ?? '?'}
+          </Text>
+        </View>
+        <View className="flex-1">
+          <Text className="text-on-surface font-medium">
+            {item.referred?.full_name ?? 'Usuario'}
+          </Text>
+          <Text className="text-onSurfaceVariant text-xs">
+            {item.status === 'pending' ? 'Pendiente' : item.status === 'completed' ? 'Completado' : 'Recompensado'}
+          </Text>
+        </View>
+        {item.reward_amount > 0 && (
+          <Text className="text-primary font-bold">+${Number(item.reward_amount).toFixed(2)}</Text>
+        )}
+      </View>
+    </GlassCard>
+  ), [])
 
   async function handleShare() {
     if (!refCode?.code) return
@@ -48,28 +72,7 @@ export function ReferralsScreen() {
         <FlatList
           data={referrals}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <GlassCard className="mb-2 p-4">
-              <View className="flex-row items-center">
-                <View className="w-10 h-10 bg-primaryContainer rounded-full items-center justify-center mr-3">
-                  <Text className="text-onPrimaryContainer font-bold">
-                    {item.referred?.full_name?.charAt(0) ?? '?'}
-                  </Text>
-                </View>
-                <View className="flex-1">
-                  <Text className="text-on-surface font-medium">
-                    {item.referred?.full_name ?? 'Usuario'}
-                  </Text>
-                  <Text className="text-onSurfaceVariant text-xs">
-                    {item.status === 'pending' ? 'Pendiente' : item.status === 'completed' ? 'Completado' : 'Recompensado'}
-                  </Text>
-                </View>
-                {item.reward_amount && (
-                  <Text className="text-primary font-bold">+${Number(item.reward_amount).toFixed(2)}</Text>
-                )}
-              </View>
-            </GlassCard>
-          )}
+          renderItem={renderReferral}
           ListEmptyComponent={
             <View className="py-12 items-center">
               <Text className="text-onSurfaceVariant text-base">Aún no has referido a nadie</Text>

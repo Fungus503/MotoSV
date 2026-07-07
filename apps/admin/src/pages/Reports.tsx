@@ -69,7 +69,7 @@ export function ReportsPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">{t('reports.reportType')}</label>
-            <select value={reportType} onChange={(e) => setReportType(e.target.value)}
+            <select value={reportType} onChange={(e) => setReportType(e.target.value)} aria-label={t('reports.reportType')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
               <option value="rides">{t('reports.rides')}</option>
               <option value="drivers">{t('reports.drivers')}</option>
@@ -79,17 +79,17 @@ export function ReportsPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t('reports.from')}</label>
-              <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+              <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} aria-label={t('reports.from')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t('reports.to')}</label>
-              <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+              <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} aria-label={t('reports.to')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
             </div>
           </div>
           {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
-          <button onClick={handleExport} disabled={exporting}
+          <button type="button" onClick={handleExport} disabled={exporting}
             className="w-full bg-primary text-white py-2.5 rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
             <Download size={16} /> {exporting ? t('reports.exporting') : t('reports.exportCsv')}
           </button>

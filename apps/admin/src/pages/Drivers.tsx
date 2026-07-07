@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Search, CheckCircle, XCircle } from 'lucide-react'
 import { useDrivers, useDriverDocuments, useUpdateDocumentStatus } from '../lib/queries'
-import { StatusBadge } from '../components'
+import { StatusBadge } from '../components/StatusBadge'
 
 export function DriversPage() {
   const { t } = useTranslation()
@@ -23,7 +23,7 @@ export function DriversPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder={t('drivers.search')} name="search" autoComplete="off"
+            placeholder={t('drivers.search')} name="search" autoComplete="off" aria-label={t('drivers.search')}
             className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary w-64"
           />
         </div>
@@ -60,7 +60,7 @@ function DriverRow({ driver, onUpdateDoc }: { driver: any; onUpdateDoc: (p: any)
 
   return (
     <>
-      <tr className="border-b border-gray-50 hover:bg-gray-50 cursor-pointer" onClick={() => setExpanded(!expanded)}>
+      <tr className="border-b border-gray-50 hover:bg-gray-50 cursor-pointer" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setExpanded(!expanded) }}>
         <td className="px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
@@ -90,14 +90,14 @@ function DriverRow({ driver, onUpdateDoc }: { driver: any; onUpdateDoc: (p: any)
                   </div>
                   <div className="flex gap-1">
                     {doc.status !== 'approved' && (
-                      <button onClick={() => onUpdateDoc({ docId: doc.id, status: 'approved' })}
-                        className="p-1.5 text-green-600 hover:bg-green-50 rounded">
+                      <button type="button" onClick={() => onUpdateDoc({ docId: doc.id, status: 'approved' })}
+                        className="p-1.5 text-green-600 hover:bg-green-50 rounded" aria-label="Approve">
                         <CheckCircle size={16} />
                       </button>
                     )}
                     {doc.status !== 'rejected' && (
-                      <button onClick={() => onUpdateDoc({ docId: doc.id, status: 'rejected' })}
-                        className="p-1.5 text-red-600 hover:bg-red-50 rounded">
+                      <button type="button" onClick={() => onUpdateDoc({ docId: doc.id, status: 'rejected' })}
+                        className="p-1.5 text-red-600 hover:bg-red-50 rounded" aria-label="Reject">
                         <XCircle size={16} />
                       </button>
                     )}
@@ -114,3 +114,4 @@ function DriverRow({ driver, onUpdateDoc }: { driver: any; onUpdateDoc: (p: any)
     </>
   )
 }
+

@@ -4,9 +4,9 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import {
   LayoutDashboard, Car, Users, UserCircle, UserCog, Settings, FileText,
   ChevronDown, LogOut, MessageSquare, FolderOpen, Truck, Package,
-  UserPlus, Shield, MapPin, Activity,
-  BarChart3, Star, BookOpen, HelpCircle, Crown, DollarSign, Zap,
-  Bell, Ticket, Tag as TagIcon, Grid3X3
+  UserPlus, Shield, MapPin,
+  BarChart3, Star, BookOpen, HelpCircle, Crown, DollarSign,
+  Bell, Ticket, Tag as TagIcon, Grid3X3, CreditCard, XCircle, MessageCircle, Image, Play
 } from 'lucide-react'
 
 function getMenuData(t: (key: string) => string) {
@@ -25,57 +25,45 @@ function getMenuData(t: (key: string) => string) {
   },
   {
     items: [
-      { label: t('sidebar.cab'), icon: <Car size={18} />, path: '#', children: [
-        { label: t('sidebar.serviceCategories'), path: '/app/services/categories' },
-        { label: t('sidebar.vehicleTypes'), path: '/app/vehicle-types' },
-      ]},
       { label: t('sidebar.rides'), icon: <Car size={18} />, path: '#', children: [
         { label: t('sidebar.rideRequests'), path: '/app/ride-requests' },
         { label: t('sidebar.allRides'), path: '/app/rides' },
         { label: t('sidebar.bids'), path: '/app/bids' },
       ]},
+      { label: t('sidebar.serviceCategories'), icon: <Package size={18} />, path: '/app/services/categories' },
+      { label: t('sidebar.vehicleTypes'), icon: <Car size={18} />, path: '/app/vehicle-types' },
     ],
   },
   {
     section: t('sidebar.userManagement'),
     items: [
-      { label: t('sidebar.users'), icon: <Users size={18} />, path: '#', children: [
-        { label: t('sidebar.allUsers'), path: '/app/users' },
-        { label: t('sidebar.addUser'), path: '/app/users' },
-        { label: t('sidebar.rolePermissions'), path: '/app/roles' },
-      ]},
-      { label: t('sidebar.riders'), icon: <UserCircle size={18} />, path: '#', children: [
-        { label: t('sidebar.allRiders'), path: '/app/riders' },
-        { label: t('sidebar.addRider'), path: '/app/riders' },
-        { label: t('sidebar.wallet'), path: '/app/wallet' },
-      ]},
+      { label: t('sidebar.users'), icon: <Users size={18} />, path: '/app/users' },
+      { label: t('sidebar.roles'), icon: <Shield size={18} />, path: '/app/roles' },
+      { label: t('sidebar.riders'), icon: <UserCircle size={18} />, path: '/app/riders' },
       { label: t('sidebar.drivers'), icon: <UserCog size={18} />, path: '#', children: [
-        { label: t('sidebar.verifiedDrivers'), path: '/app/drivers' },
-        { label: t('sidebar.unverifiedDrivers'), path: '/app/drivers' },
-        { label: t('sidebar.addDriver'), path: '/app/drivers' },
-        { label: t('sidebar.driverDocuments'), path: '/app/drivers' },
+        { label: t('sidebar.verifiedDrivers'), path: '/app/drivers/verified' },
+        { label: t('sidebar.unverifiedDrivers'), path: '/app/drivers/unverified' },
+        { label: t('sidebar.addDriver'), path: '/app/drivers/add' },
+        { label: t('sidebar.driverDocuments'), path: '/app/drivers/documents' },
         { label: t('sidebar.driverRules'), path: '/app/driver-rules' },
         { label: t('sidebar.driverLocation'), path: '/app/driver-location' },
-        { label: t('sidebar.withdrawRequests'), path: '/app/withdraw-requests' },
         { label: t('sidebar.commissionHistories'), path: '/app/commissions' },
         { label: t('sidebar.driverEarnings'), path: '/app/driver-earnings' },
         { label: t('sidebar.driverPayouts'), path: '/app/driver-payouts' },
-        { label: t('sidebar.wallet'), path: '/app/wallet' },
+        { label: t('sidebar.withdrawRequests'), path: '/app/withdraw-requests' },
         { label: t('sidebar.notices'), path: '/app/notices' },
       ]},
-      { label: t('sidebar.dispatchers'), icon: <UserPlus size={18} />, path: '#', children: [
-        { label: t('sidebar.allDispatchers'), path: '/app/dispatchers' },
-        { label: t('sidebar.addDispatcher'), path: '/app/dispatchers' },
+      { label: t('sidebar.wallet'), icon: <DollarSign size={18} />, path: '#', children: [
+        { label: t('sidebar.riderWallet'), path: '/app/wallet?role=rider' },
+        { label: t('sidebar.driverWallet'), path: '/app/wallet?role=driver' },
+        { label: t('sidebar.fleetWallet'), path: '/app/wallet?role=fleet_manager' },
       ]},
+      { label: t('sidebar.dispatchers'), icon: <UserPlus size={18} />, path: '/app/dispatchers' },
       { label: t('sidebar.fleetManagers'), icon: <Users size={18} />, path: '#', children: [
         { label: t('sidebar.allFleetManagers'), path: '/app/fleet-managers' },
         { label: t('sidebar.verifiedFleetManagers'), path: '/app/fleet-managers/verified' },
         { label: t('sidebar.unverifiedFleetManagers'), path: '/app/fleet-managers/unverified' },
         { label: t('sidebar.fleetManagerAdd'), path: '/app/fleet-managers/add' },
-        { label: t('sidebar.fleetVehicleDocuments'), path: '/app/fleet-vehicles' },
-        { label: t('sidebar.fleetDocuments'), path: '/app/fleet-vehicles' },
-        { label: t('sidebar.wallet'), path: '/app/wallet' },
-        { label: t('sidebar.withdrawRequests'), path: '/app/withdraw-requests' },
       ]},
       { label: t('sidebar.fleetVehicles'), icon: <Truck size={18} />, path: '#', children: [
         { label: t('sidebar.allFleetVehicles'), path: '/app/fleet-vehicles' },
@@ -89,53 +77,34 @@ function getMenuData(t: (key: string) => string) {
   {
     section: t('sidebar.cabManagement'),
     items: [
-      { label: t('sidebar.zones'), icon: <MapPin size={18} />, path: '#', children: [{ label: t('sidebar.zones'), path: '/app/zones' }] },
-      { label: t('sidebar.services'), icon: <Package size={18} />, path: '/app/services/categories' },
-      { label: t('sidebar.vehicles'), icon: <Car size={18} />, path: '#', children: [
-        { label: t('sidebar.vehicleTypes'), path: '/app/vehicle-types' },
+      { label: t('sidebar.zones'), icon: <MapPin size={18} />, path: '#', children: [
+        { label: t('sidebar.zones'), path: '/app/zones' },
         { label: t('sidebar.serviceTypes'), path: '/app/services/types' },
-        { label: t('sidebar.vehicleApproval'), path: '/app/vehicle-approval' },
-      ]},
-      { label: t('sidebar.peakZones'), icon: <Activity size={18} />, path: '#', children: [
         { label: t('sidebar.peakZones'), path: '/app/peak-zones' },
         { label: t('sidebar.peakZoneMap'), path: '/app/peak-zones/map' },
       ]},
-      { label: t('sidebar.heatMap'), icon: <Grid3X3 size={18} />, path: '/app/zones' },
-      { label: t('sidebar.sos'), icon: <Bell size={18} />, path: '#', children: [
-        { label: t('sidebar.sos'), path: '/app/sos' },
-        { label: t('sidebar.sosAlerts'), path: '/app/sos' },
-      ]},
+      { label: t('sidebar.heatMap'), icon: <Grid3X3 size={18} />, path: '/app/heat-map' },
+      { label: t('sidebar.vehicleApproval'), icon: <Car size={18} />, path: '/app/vehicle-approval' },
+      { label: t('sidebar.sos'), icon: <Bell size={18} />, path: '/app/sos' },
+      { label: t('sidebar.payments'), icon: <CreditCard size={18} />, path: '/app/payments' },
+      { label: t('sidebar.cancellationReasons'), icon: <XCircle size={18} />, path: '/app/cancellation-reasons' },
       { label: t('sidebar.reports'), icon: <BarChart3 size={18} />, path: '#', children: [
-        { label: t('sidebar.transactionReports'), path: '/app/reports' },
-        { label: t('sidebar.rideReports'), path: '/app/reports' },
-        { label: t('sidebar.driverReports'), path: '/app/reports' },
-        { label: t('sidebar.couponReports'), path: '/app/reports' },
-        { label: t('sidebar.zoneReports'), path: '/app/reports' },
-        { label: t('sidebar.incentiveReports'), path: '/app/reports' },
+        { label: t('sidebar.transactionReports'), path: '/app/reports/transactions' },
+        { label: t('sidebar.rideReports'), path: '/app/reports/rides' },
+        { label: t('sidebar.driverReports'), path: '/app/reports/drivers' },
+        { label: t('sidebar.couponReports'), path: '/app/reports/coupons' },
+        { label: t('sidebar.zoneReports'), path: '/app/reports/zones' },
+        { label: t('sidebar.incentiveReports'), path: '/app/reports/incentives' },
       ]},
       { label: t('sidebar.reviews'), icon: <Star size={18} />, path: '#', children: [
-        { label: t('sidebar.riderReviews'), path: '/app/reviews' },
-        { label: t('sidebar.driverReviews'), path: '/app/reviews' },
+        { label: t('sidebar.riderReviews'), path: '/app/reviews/rider' },
+        { label: t('sidebar.driverReviews'), path: '/app/reviews/driver' },
       ]},
       { label: t('sidebar.appSettings'), icon: <Settings size={18} />, path: '#', children: [
         { label: t('sidebar.settings'), path: '/app/settings' },
         { label: t('sidebar.adminSessions'), path: '/app/admin-sessions' },
+        { label: t('sidebar.pushNotifications'), path: '/app/push-notifications' },
       ]},
-    ],
-  },
-  {
-    section: t('sidebar.contentManagement'),
-    items: [
-      { label: t('sidebar.blogs'), icon: <BookOpen size={18} />, path: '#', children: [
-        { label: t('sidebar.allBlogs'), path: '/app/blogs' },
-        { label: t('sidebar.addBlogs'), path: '/app/blogs' },
-      ]},
-      { label: t('sidebar.pages'), icon: <FileText size={18} />, path: '#', children: [
-        { label: t('sidebar.allPages'), path: '/app/pages' },
-        { label: t('sidebar.addPage'), path: '/app/pages' },
-      ]},
-      { label: t('sidebar.faqs'), icon: <HelpCircle size={18} />, path: '/app/faqs' },
-      { label: t('sidebar.knowledgeBase'), icon: <BookOpen size={18} />, path: '/app/knowledge-base' },
     ],
   },
   {
@@ -148,7 +117,18 @@ function getMenuData(t: (key: string) => string) {
       { label: t('sidebar.fareConfig'), icon: <Settings size={18} />, path: '/app/fare-config' },
       { label: t('sidebar.extraCharges'), icon: <DollarSign size={18} />, path: '/app/extra-charges' },
       { label: t('sidebar.coupons'), icon: <TagIcon size={18} />, path: '/app/promotions' },
-      { label: t('sidebar.surgePrices'), icon: <Zap size={18} />, path: '/app/fare-config' },
+    ],
+  },
+  {
+    section: t('sidebar.contentManagement'),
+    items: [
+      { label: t('sidebar.blogs'), icon: <BookOpen size={18} />, path: '/app/blogs' },
+      { label: t('sidebar.pages'), icon: <FileText size={18} />, path: '/app/pages' },
+      { label: t('sidebar.faqs'), icon: <HelpCircle size={18} />, path: '/app/faqs' },
+      { label: t('sidebar.knowledgeBase'), icon: <BookOpen size={18} />, path: '/app/knowledge-base' },
+      { label: t('sidebar.testimonials'), icon: <MessageCircle size={18} />, path: '/app/testimonials' },
+      { label: t('sidebar.banners'), icon: <Image size={18} />, path: '/app/banners' },
+      { label: t('sidebar.onboardings'), icon: <Play size={18} />, path: '/app/onboardings' },
     ],
   },
   {
@@ -194,7 +174,7 @@ export function Sidebar({ collapsed, full, onClose, onSignOut }: SidebarProps) {
 
   return (
     <>
-      {!collapsed && !full && <div className="fixed inset-0 bg-black/30 z-40 lg:hidden" onClick={onClose} />}
+      {!collapsed && !full && <div role="presentation" className="fixed inset-0 bg-black/30 z-40 lg:hidden" onClick={onClose} />}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 sidebar-gradient flex flex-col h-screen transition-all duration-300 ease-in-out ${
         collapsed ? '-translate-x-full' : 'translate-x-0'
       } lg:translate-x-0 ${full ? 'w-64' : 'lg:w-16 w-64'}`}>
@@ -203,14 +183,14 @@ export function Sidebar({ collapsed, full, onClose, onSignOut }: SidebarProps) {
             <span className="text-white font-bold text-sm">M</span>
           </div>
           {full && <span className="text-white font-semibold text-lg truncate">MotoSV</span>}
-          <button onClick={onClose} className={`lg:hidden text-white/60 hover:text-white ${full ? 'ml-auto' : 'hidden'}`}>✕</button>
+          <button type="button" onClick={onClose} className={`lg:hidden text-white/60 hover:text-white ${full ? 'ml-auto' : 'hidden'}`}>✕</button>
         </div>
 
         <div className="flex-1 overflow-y-auto py-2 sidebar-scroll">
           {full ? (
             // === MODO COMPLETO ===
-            menuData.map((section) => (
-              <div key={section.section ?? Math.random()}>
+            menuData.map((section, si) => (
+              <div key={section.section ?? `section-${si}`}>
                 {section.section && (
                   <div className="text-xs text-white/40 uppercase tracking-wider px-3 pt-3 pb-1 font-semibold">{section.section}</div>
                 )}
@@ -223,7 +203,7 @@ export function Sidebar({ collapsed, full, onClose, onSignOut }: SidebarProps) {
                   if (hasChildren) {
                     return (
                       <div key={item.label} className={`sidebar-menu-list ${isOpen ? 'open' : ''}`}>
-                        <button onClick={() => toggleMenu(item.label)}
+                        <button type="button" onClick={() => toggleMenu(item.label)}
                           className="sidebar-header flex items-center gap-3 w-full px-3 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
                           {item.icon}
                           <span className="flex-1 text-left">{item.label}</span>
@@ -255,8 +235,8 @@ export function Sidebar({ collapsed, full, onClose, onSignOut }: SidebarProps) {
           ) : (
             // === MODO ICONOS ===
             <div className="flex flex-col items-center gap-1 px-1">
-              {menuData.map((section) => (
-                section.items.map((item: any) => {
+              {menuData.map((section, si) => (
+                section.items.map((item: any, ii: number) => {
                   const hasChildren = item.children && item.children.length > 0
                   if (hasChildren) {
                     return (
@@ -290,7 +270,7 @@ export function Sidebar({ collapsed, full, onClose, onSignOut }: SidebarProps) {
 
         {/* Logout */}
         <div className={`p-3 border-t border-white/10 shrink-0 ${full ? '' : 'flex justify-center'}`}>
-          <button onClick={onSignOut}
+          <button type="button" onClick={onSignOut}
             className={`flex items-center text-sm text-white/60 hover:text-white hover:bg-white/10 rounded-lg transition-colors ${
               full ? 'gap-3 px-3 py-2.5 w-full' : 'justify-center p-2.5'
             }`}

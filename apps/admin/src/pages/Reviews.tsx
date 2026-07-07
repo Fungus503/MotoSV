@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
@@ -42,3 +42,4 @@ export function ReviewsPage() {
     </div>
   )
 }
+

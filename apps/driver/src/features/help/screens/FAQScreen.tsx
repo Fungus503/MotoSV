@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { useState, useMemo, useCallback } from 'react'
+import { View, Text, TextInput, FlatList, Pressable } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard } from '@motosv/ui'
 import { useFaqs } from '@motosv/api'
@@ -29,6 +29,46 @@ export function DriverFAQScreen() {
     )
   }, [faqs, search])
 
+  const handleCategoryPress = useCallback((id: string) => {
+    setSelectedCategory(id)
+  }, [])
+
+  const handleFaqPress = useCallback((id: string) => {
+    setExpandedId((prev) => (prev === id ? null : id))
+  }, [])
+
+  const renderCategoryItem = useCallback(({ item }: { item: (typeof categories)[0] }) => (
+    <Pressable
+      onPress={() => handleCategoryPress(item.id)}
+      className={`px-4 py-2 rounded-full mr-2 ${selectedCategory === item.id ? 'bg-primary' : 'bg-surfaceContainerLow'}`}
+    >
+      <Text className={selectedCategory === item.id ? 'text-onPrimary text-sm' : 'text-on-surface text-sm'}>
+        {item.label}
+      </Text>
+    </Pressable>
+  ), [selectedCategory, handleCategoryPress])
+
+  const renderFaqItem = useCallback(({ item }: { item: any }) => (
+    <GlassCard className="mb-3">
+      <Pressable
+        onPress={() => handleFaqPress(item.id)}
+        className="p-4"
+      >
+        <View className="flex-row items-center">
+          <Text className="flex-1 text-on-surface font-medium">{item.question}</Text>
+          <Text className="text-onSurfaceVariant text-lg ml-2">
+            {expandedId === item.id ? '−' : '+'}
+          </Text>
+        </View>
+        {expandedId === item.id && (
+          <Text className="text-onSurfaceVariant text-sm mt-3 leading-5">
+            {item.answer}
+          </Text>
+        )}
+      </Pressable>
+    </GlassCard>
+  ), [expandedId, handleFaqPress])
+
   return (
     <View className="flex-1 bg-surface" style={{ paddingTop: insets.top }}>
       <View className="px-4 py-4">
@@ -48,42 +88,14 @@ export function DriverFAQScreen() {
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16, marginBottom: 12 }}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => setSelectedCategory(item.id)}
-            className={`px-4 py-2 rounded-full mr-2 ${selectedCategory === item.id ? 'bg-primary' : 'bg-surfaceContainerLow'}`}
-          >
-            <Text className={selectedCategory === item.id ? 'text-onPrimary text-sm' : 'text-on-surface text-sm'}>
-              {item.label}
-            </Text>
-          </TouchableOpacity>
-        )}
+        renderItem={renderCategoryItem}
       />
 
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
-        renderItem={({ item }) => (
-          <GlassCard className="mb-3">
-            <TouchableOpacity
-              onPress={() => setExpandedId(expandedId === item.id ? null : item.id)}
-              className="p-4"
-            >
-              <View className="flex-row items-center">
-                <Text className="flex-1 text-on-surface font-medium">{item.question}</Text>
-                <Text className="text-onSurfaceVariant text-lg ml-2">
-                  {expandedId === item.id ? '−' : '+'}
-                </Text>
-              </View>
-              {expandedId === item.id && (
-                <Text className="text-onSurfaceVariant text-sm mt-3 leading-5">
-                  {item.answer}
-                </Text>
-              )}
-            </TouchableOpacity>
-          </GlassCard>
-        )}
+        renderItem={renderFaqItem}
         ListEmptyComponent={
           <View className="py-12 items-center">
             <Text className="text-onSurfaceVariant text-base">

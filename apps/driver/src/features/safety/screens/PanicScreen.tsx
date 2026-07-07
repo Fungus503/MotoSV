@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { router, useLocalSearchParams } from 'expo-router'
 import { Button, GlassCard } from '@motosv/ui'
@@ -52,14 +52,14 @@ export function DriverPanicScreen() {
 
       <View className="px-4 flex-1">
         {alertTypes.map((type) => (
-          <TouchableOpacity
+          <Pressable
             key={type.id}
             onPress={() => setSelectedType(type.id)}
             className={`flex-row items-center p-4 rounded-2xl mb-3 ${selectedType === type.id ? `${type.color} bg-opacity-20` : 'bg-surfaceContainerLow'}`}
           >
             <Text className="text-2xl mr-3">{type.icon}</Text>
             <Text className="text-on-surface text-base font-medium">{type.label}</Text>
-          </TouchableOpacity>
+          </Pressable>
         ))}
       </View>
 

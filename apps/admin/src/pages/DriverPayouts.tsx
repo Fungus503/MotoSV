@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -64,9 +64,9 @@ export function DriverPayoutsPage() {
           { key: 'paid_at', label: t('driverPayouts.paidAt'), render: (r: any) => r.paid_at ? new Date(r.paid_at).toLocaleString() : '—' },
           { key: '', label: '', width: 'w-24', render: (r: any) => r.status === 'pending' ? (
             <div className="flex gap-1">
-              <button onClick={(e) => { e.stopPropagation(); try { if (confirm(t('driverPayouts.approveConfirm'))) updateMutation.mutateAsync({ id: r.id, status: 'approved' }) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); try { if (confirm(t('driverPayouts.approveConfirm'))) updateMutation.mutateAsync({ id: r.id, status: 'approved' }) } catch (e) { alert(handleError(e)) } }}
                 className="px-2 py-1 text-xs bg-green-50 text-green-600 rounded hover:bg-green-100">{t('driverPayouts.approve')}</button>
-              <button onClick={(e) => { e.stopPropagation(); try { if (confirm(t('driverPayouts.rejectConfirm'))) updateMutation.mutateAsync({ id: r.id, status: 'cancelled' }) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); try { if (confirm(t('driverPayouts.rejectConfirm'))) updateMutation.mutateAsync({ id: r.id, status: 'cancelled' }) } catch (e) { alert(handleError(e)) } }}
                 className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">{t('driverPayouts.reject')}</button>
             </div>
           ) : null},
@@ -78,3 +78,4 @@ export function DriverPayoutsPage() {
     </div>
   )
 }
+

@@ -1,9 +1,11 @@
 import Chart from 'react-apexcharts'
 import { Car, Users, DollarSign, Activity } from 'lucide-react'
-import { StatCard, StatusBadge } from '../components'
+import { StatCard } from '../components/StatCard'
+import { StatusBadge } from '../components/StatusBadge'
 import { useDashboardMetrics, useWeeklyEarnings, useAllRides } from '../lib/queries'
 import { format } from 'date-fns'
 import { es, enUS } from 'date-fns/locale'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function DashboardPage() {
@@ -32,6 +34,9 @@ export function DashboardPage() {
 
   const chartSeries = [{ name: t('dashboard.earnings'), data: seriesData }]
 
+  const [todayStr, setTodayStr] = useState('')
+  useEffect(() => { setTodayStr(format(new Date(), "EEEE, d 'de' MMMM", { locale: i18n.language === 'en' ? enUS : es })) }, [i18n.language])
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -40,7 +45,7 @@ export function DashboardPage() {
           <p className="text-sm text-gray-400 mt-0.5">{t('dashboard.welcome')}</p>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-400">
-          <span>{format(new Date(), "EEEE, d 'de' MMMM", { locale: i18n.language === 'en' ? enUS : es })}</span>
+          <span>{todayStr}</span>
         </div>
       </div>
       {(mMetricsError || mWeeklyError) && (
@@ -101,3 +106,4 @@ export function DashboardPage() {
     </div>
   )
 }
+

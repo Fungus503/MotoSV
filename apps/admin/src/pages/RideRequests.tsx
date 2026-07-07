@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DataTable, StatusBadge } from '../components'
+import { DataTable } from '../components/DataTable'
+import { StatusBadge } from '../components/StatusBadge'
 import { useRideRequests, useUpdateRideRequest } from '../lib/queries'
 
 export function RideRequestsPage() {
@@ -27,7 +28,7 @@ export function RideRequestsPage() {
       </div>
       <div className="flex gap-2 mb-4 flex-wrap">
         {['', 'pending', 'finding_driver', 'accepted', 'cancelled', 'expired'].map((s) => (
-          <button key={s} onClick={() => setStatusFilter(s)}
+          <button type="button" key={s} onClick={() => setStatusFilter(s)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium ${statusFilter === s ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'}`}>
             {s ? t('status.' + s) : t('rideRequests.all')}
           </button>
@@ -46,12 +47,12 @@ export function RideRequestsPage() {
             <div className="flex gap-1">
               {r.status === 'pending' && (
                 <>
-                  <button onClick={(e) => { e.stopPropagation(); handleAction(r.id, 'cancelled') }}
+                  <button type="button" onClick={(e) => { e.stopPropagation(); handleAction(r.id, 'cancelled') }}
                     className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">{t('rideRequests.cancel')}</button>
                 </>
               )}
               {r.status === 'finding_driver' && (
-                <button onClick={(e) => { e.stopPropagation(); handleAction(r.id, 'cancelled') }}
+                <button type="button" onClick={(e) => { e.stopPropagation(); handleAction(r.id, 'cancelled') }}
                   className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">{t('rideRequests.cancel')}</button>
               )}
             </div>
@@ -64,3 +65,4 @@ export function RideRequestsPage() {
     </div>
   )
 }
+

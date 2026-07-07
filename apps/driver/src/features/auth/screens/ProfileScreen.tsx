@@ -1,18 +1,18 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 import { GlassCard, Button } from '@motosv/ui'
 import { useSession, useProfile, signOut } from '@motosv/api'
 
+async function handleSignOut() {
+  await signOut()
+  router.replace('/(auth)/login')
+}
+
 export function ProfileScreen() {
   const insets = useSafeAreaInsets()
   const { data: session } = useSession()
   const { data: profile } = useProfile(session?.user?.id)
-
-  async function handleSignOut() {
-    await signOut()
-    router.replace('/(auth)/login')
-  }
 
   return (
     <View className="flex-1 bg-surface" style={{ paddingTop: insets.top }}>
@@ -33,17 +33,17 @@ export function ProfileScreen() {
       </GlassCard>
 
       <GlassCard className="mx-4 p-2">
-        <TouchableOpacity className="flex-row items-center p-4 border-b border-surfaceContainerHighest">
+        <Pressable className="flex-row items-center p-4 border-b border-surfaceContainerHighest">
           <Text className="text-on-surface flex-1">Documentos</Text>
           <Text className="text-onSurfaceVariant">Ver estado</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-row items-center p-4 border-b border-surfaceContainerHighest">
+        </Pressable>
+        <Pressable className="flex-row items-center p-4 border-b border-surfaceContainerHighest">
           <Text className="text-on-surface flex-1">Idioma</Text>
           <Text className="text-onSurfaceVariant">Español</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-row items-center p-4" onPress={handleSignOut}>
+        </Pressable>
+        <Pressable className="flex-row items-center p-4" onPress={handleSignOut}>
           <Text className="text-error flex-1">Cerrar sesión</Text>
-        </TouchableOpacity>
+        </Pressable>
       </GlassCard>
     </View>
   )

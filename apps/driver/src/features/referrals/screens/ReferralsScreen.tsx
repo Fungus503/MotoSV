@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { View, Text, FlatList, Share } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GlassCard, Button, Loading } from '@motosv/ui'
@@ -17,6 +18,22 @@ export function DriverReferralsScreen() {
       })
     } catch {}
   }
+
+  const renderReferral = useCallback(({ item }: { item: { id: string; status: string; reward_amount: number } }) => (
+    <GlassCard className="mb-2 p-4">
+      <View className="flex-row items-center">
+        <View className="flex-1">
+          <Text className="text-on-surface font-medium">Conductor referido</Text>
+          <Text className="text-onSurfaceVariant text-xs">
+            {item.status === 'pending' ? 'Pendiente' : item.status === 'completed' ? 'Completado' : 'Recompensado'}
+          </Text>
+        </View>
+        {item.reward_amount > 0 && (
+          <Text className="text-primary font-bold">+${Number(item.reward_amount).toFixed(2)}</Text>
+        )}
+      </View>
+    </GlassCard>
+  ), [])
 
   return (
     <View className="flex-1 bg-surface" style={{ paddingTop: insets.top }}>
@@ -48,21 +65,7 @@ export function DriverReferralsScreen() {
         <FlatList
           data={referrals}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <GlassCard className="mb-2 p-4">
-              <View className="flex-row items-center">
-                <View className="flex-1">
-                  <Text className="text-on-surface font-medium">Conductor referido</Text>
-                  <Text className="text-onSurfaceVariant text-xs">
-                    {item.status === 'pending' ? 'Pendiente' : item.status === 'completed' ? 'Completado' : 'Recompensado'}
-                  </Text>
-                </View>
-                {item.reward_amount && (
-                  <Text className="text-primary font-bold">+${Number(item.reward_amount).toFixed(2)}</Text>
-                )}
-              </View>
-            </GlassCard>
-          )}
+          renderItem={renderReferral}
           ListEmptyComponent={
             <View className="py-12 items-center">
               <Text className="text-onSurfaceVariant text-base">Aún no has referido a nadie</Text>

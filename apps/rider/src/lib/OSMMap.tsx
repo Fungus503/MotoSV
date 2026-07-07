@@ -2,6 +2,16 @@ import React, { useState, useEffect, useRef } from 'react'
 import { View, ActivityIndicator, Text, Platform } from 'react-native'
 import MapView, { UrlTile, Marker, PROVIDER_DEFAULT, Region } from 'react-native-maps'
 
+const driverMarkerContainer = {
+  width: 32, height: 32, borderRadius: 16,
+  backgroundColor: '#006e2a', alignItems: 'center',
+  justifyContent: 'center', borderWidth: 2, borderColor: '#fff',
+}
+
+const mapContainerStyle = { flex: 1, borderRadius: 16, overflow: 'hidden' as const }
+
+const driverEmojiStyle = { color: '#fff', fontSize: 14, fontWeight: 'bold' as const }
+
 interface OSMMapProps {
   pickup?: { latitude: number; longitude: number; title?: string }
   dropoff?: { latitude: number; longitude: number; title?: string }
@@ -50,7 +60,7 @@ export function OSMMap({
   }, [pickup, dropoff, mapReady])
 
   return (
-    <View style={{ flex: 1, borderRadius: 16, overflow: 'hidden' }} className={className}>
+    <View style={mapContainerStyle} className={className}>
       <MapView
         ref={mapRef}
         provider={PROVIDER_DEFAULT}
@@ -99,12 +109,8 @@ export function OSMMap({
             image={require('@/assets/driver-marker.png') ? undefined : undefined}
             rotation={driver.heading ?? 0}
           >
-            <View style={{
-              width: 32, height: 32, borderRadius: 16,
-              backgroundColor: '#006e2a', alignItems: 'center',
-              justifyContent: 'center', borderWidth: 2, borderColor: '#fff',
-            }}>
-              <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>🛵</Text>
+            <View style={driverMarkerContainer}>
+              <Text style={driverEmojiStyle}>🛵</Text>
             </View>
           </Marker>
         ))}

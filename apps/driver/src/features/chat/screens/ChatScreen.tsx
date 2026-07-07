@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react'
-import { View, Text, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
+import { useState, useRef, useCallback } from 'react'
+import { View, Text, TextInput, FlatList, Pressable, KeyboardAvoidingView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useLocalSearchParams } from 'expo-router'
 import { useSession, useMessages, useSendMessage } from '@motosv/api'
@@ -22,6 +22,22 @@ export function DriverChatScreen() {
     setInput('')
   }
 
+  const renderMessage = useCallback(({ item }: { item: { id: string; sender_id: string; content: string; created_at: string } }) => {
+    const isMine = item.sender_id === session?.user?.id
+    return (
+      <View className={`px-4 py-1 ${isMine ? 'items-end' : 'items-start'}`}>
+        <View
+          className={`max-w-[80%] rounded-2xl px-4 py-2 ${isMine ? 'bg-primary rounded-tr-sm' : 'bg-surfaceContainerHigh rounded-tl-sm'}`}
+        >
+          <Text className={isMine ? 'text-onPrimary' : 'text-on-surface'}>{item.content}</Text>
+          <Text className={`text-xs mt-1 ${isMine ? 'text-onPrimary/60' : 'text-onSurfaceVariant'}`}>
+            {new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </Text>
+        </View>
+      </View>
+    )
+  }, [session?.user?.id])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -36,21 +52,7 @@ export function DriverChatScreen() {
         ref={flatListRef}
         data={messages}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          const isMine = item.sender_id === session?.user?.id
-          return (
-            <View className={`px-4 py-1 ${isMine ? 'items-end' : 'items-start'}`}>
-              <View
-                className={`max-w-[80%] rounded-2xl px-4 py-2 ${isMine ? 'bg-primary rounded-tr-sm' : 'bg-surfaceContainerHigh rounded-tl-sm'}`}
-              >
-                <Text className={isMine ? 'text-onPrimary' : 'text-on-surface'}>{item.content}</Text>
-                <Text className={`text-xs mt-1 ${isMine ? 'text-onPrimary/60' : 'text-onSurfaceVariant'}`}>
-                  {new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </Text>
-              </View>
-            </View>
-          )
-        }}
+        renderItem={renderMessage}
         contentContainerStyle={{ paddingVertical: 16 }}
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
       />
@@ -63,13 +65,13 @@ export function DriverChatScreen() {
           placeholderTextColor="#9ca3af"
           className="flex-1 bg-surfaceContainerLow rounded-full px-4 py-3 text-on-surface text-base mr-2"
         />
-        <TouchableOpacity
+        <Pressable
           onPress={handleSend}
           disabled={!input.trim() || sendMessage.isPending}
           className="bg-primary w-10 h-10 rounded-full items-center justify-center"
         >
           <Text className="text-onPrimary text-lg">→</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </KeyboardAvoidingView>
   )

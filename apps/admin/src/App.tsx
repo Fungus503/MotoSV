@@ -6,6 +6,10 @@ import { supabase } from './lib/supabase'
 import { LoginPage } from './pages/Login'
 import { DashboardPage } from './pages/Dashboard'
 import { DriversPage } from './pages/Drivers'
+import { DriversVerifiedPage } from './pages/DriversVerified'
+import { DriversUnverifiedPage } from './pages/DriversUnverified'
+import { DriverAddPage } from './pages/DriverAdd'
+import { DriverDocumentsPage } from './pages/DriverDocuments'
 import { RidesPage } from './pages/Rides'
 import { FareConfigPage } from './pages/FareConfig'
 import { ReportsPage } from './pages/Reports'
@@ -24,6 +28,10 @@ import { SOSPage } from './pages/SOSAlerts'
 import { WalletAdminPage } from './pages/WalletAdmin'
 import { BidsPage } from './pages/Bids'
 import { ReviewsPage } from './pages/Reviews'
+import { RiderReviewsPage } from './pages/RiderReviews'
+import { DriverReviewsPage } from './pages/DriverReviews'
+import { HeatMapPage } from './pages/HeatMap'
+import { ReportTransactionsPage, ReportRidesPage, ReportDriversPage, ReportCouponsPage, ReportZonesPage, ReportIncentivesPage } from './pages/ReportPages'
 import { ChatsAdminPage } from './pages/ChatsAdmin'
 import { DriverLocationPage } from './pages/DriverLocationPage'
 import { PushNotificationsPage } from './pages/PushNotifications'
@@ -98,9 +106,22 @@ export default function App() {
           <Route path="/app" element={<RequireAuth><Layout><DashboardPage /></Layout></RequireAuth>} />
           <Route path="/app/dashboard" element={<RequireAuth><Layout><DashboardPage /></Layout></RequireAuth>} />
           <Route path="/app/drivers" element={<RequireAuth><Layout><DriversPage /></Layout></RequireAuth>} />
+          <Route path="/app/drivers/verified" element={<RequireAuth><Layout><DriversVerifiedPage /></Layout></RequireAuth>} />
+          <Route path="/app/drivers/unverified" element={<RequireAuth><Layout><DriversUnverifiedPage /></Layout></RequireAuth>} />
+          <Route path="/app/drivers/add" element={<RequireAuth><Layout><DriverAddPage /></Layout></RequireAuth>} />
+          <Route path="/app/drivers/documents" element={<RequireAuth><Layout><DriverDocumentsPage /></Layout></RequireAuth>} />
           <Route path="/app/rides" element={<RequireAuth><Layout><RidesPage /></Layout></RequireAuth>} />
           <Route path="/app/fare-config" element={<RequireAuth><Layout><FareConfigPage /></Layout></RequireAuth>} />
           <Route path="/app/reports" element={<RequireAuth><Layout><ReportsPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/transactions" element={<RequireAuth><Layout><ReportTransactionsPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/rides" element={<RequireAuth><Layout><ReportRidesPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/drivers" element={<RequireAuth><Layout><ReportDriversPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/coupons" element={<RequireAuth><Layout><ReportCouponsPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/zones" element={<RequireAuth><Layout><ReportZonesPage /></Layout></RequireAuth>} />
+          <Route path="/app/reports/incentives" element={<RequireAuth><Layout><ReportIncentivesPage /></Layout></RequireAuth>} />
+          <Route path="/app/reviews/rider" element={<RequireAuth><Layout><RiderReviewsPage /></Layout></RequireAuth>} />
+          <Route path="/app/reviews/driver" element={<RequireAuth><Layout><DriverReviewsPage /></Layout></RequireAuth>} />
+          <Route path="/app/heat-map" element={<RequireAuth><Layout><HeatMapPage /></Layout></RequireAuth>} />
           <Route path="/app/services/categories" element={<RequireAuth><Layout><ServiceCategoriesPage /></Layout></RequireAuth>} />
           <Route path="/app/services/types" element={<RequireAuth><Layout><ServiceTypesPage /></Layout></RequireAuth>} />
           <Route path="/app/vehicle-types" element={<RequireAuth><Layout><VehicleTypesPage /></Layout></RequireAuth>} />

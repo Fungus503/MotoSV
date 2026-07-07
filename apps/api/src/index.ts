@@ -17,6 +17,7 @@ import { ratingsRouter } from './routes/ratings'
 import { driversRouter } from './routes/drivers'
 import { paymentsRouter } from './routes/payments'
 import { ridesRouter } from './routes/rides'
+import { adminRouter } from './routes/admin'
 
 const app = new Hono()
 
@@ -42,6 +43,7 @@ app.route('/api/ratings', ratingsRouter)
 app.route('/api/drivers', driversRouter)
 app.route('/api/payments', paymentsRouter)
 app.route('/api/rides', ridesRouter)
+app.route('/api/admin', adminRouter)
 
 app.use('/api/fares/*', rateLimit({ max: 60, windowMs: 60000 }))
 app.use('/api/ratings/*', rateLimit({ max: 30, windowMs: 60000 }))

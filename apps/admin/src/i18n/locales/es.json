@@ -36,6 +36,10 @@
     "media": "Multimedia",
     "cab": "Taxi",
     "serviceCategories": "Categorías de Servicio",
+    "roles": "Roles y Permisos",
+    "riderWallet": "Billetera Pasajeros",
+    "driverWallet": "Billetera Conductores",
+    "fleetWallet": "Billetera Flotillas",
     "vehicleTypes": "Tipos de Vehículo",
     "vehicleApproval": "Aprobación Vehículos",
     "rides": "Viajes",
@@ -101,6 +105,12 @@
     "driverReviews": "Reseñas de Conductores",
     "appSettings": "Configuración",
     "adminSessions": "Sesiones de Admin",
+    "pushNotifications": "Notificaciones Push",
+    "cancellationReasons": "Motivos de Cancelación",
+    "payments": "Pagos",
+    "testimonials": "Testimonios",
+    "banners": "Banners",
+    "onboardings": "Onboarding",
     "contentManagement": "Gestión de Contenido",
     "blogs": "Blogs",
     "allBlogs": "Todos los Blogs",
@@ -297,7 +307,19 @@
     "amount": "Monto",
     "gateway": "Pasarela",
     "commission": "Comisión",
-    "net": "Neto"
+    "net": "Neto",
+    "ridesTitle": "Reporte de Viajes",
+    "ridesDesc": "Exportar datos de viajes",
+    "driversTitle": "Reporte de Conductores",
+    "driversDesc": "Exportar datos de conductores",
+    "couponsTitle": "Reporte de Cupones",
+    "couponsDesc": "Exportar datos de promociones y canjes",
+    "zonesTitle": "Reporte de Zonas",
+    "zonesDesc": "Exportar datos de zonas",
+    "incentivesTitle": "Reporte de Incentivos",
+    "incentivesDesc": "Exportar comisiones y ganancias",
+    "transactions": "Transacciones",
+    "transactionsDesc": "Exportar pagos y transacciones"
   },
   "faqs": {
     "title": "Preguntas Frecuentes",
@@ -429,7 +451,11 @@
     "rider": "Pasajero",
     "driver": "Conductor",
     "admin": "Admin",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "confirmDelete": "¿Eliminar este usuario? Se borrará permanentemente.",
+    "deleted": "Usuario eliminado correctamente",
+    "deleteError": "Error al eliminar usuario",
+    "cannotDeleteSelf": "No puedes eliminarte a ti mismo"
   },
   "riders": {
     "title": "Pasajeros",
@@ -517,7 +543,10 @@
     "notes": "Notas",
     "date": "Fecha",
     "resolve": "Resolver",
-    "false": "Falsa alarma"
+    "false": "Falsa alarma",
+    "activeAlerts": "alertas activas",
+    "resolvedToast": "Alerta resuelta",
+    "falseToast": "Marcada como falsa alarma"
   },
   "wallet": {
     "title": "Billetera",
@@ -539,6 +568,10 @@
   "reviews": {
     "title": "Reseñas",
     "description": "Gestionar reseñas de pasajeros y conductores",
+    "riderTitle": "Reseñas de Pasajeros",
+    "riderDescription": "Reseñas escritas por pasajeros",
+    "driverTitle": "Reseñas de Conductores",
+    "driverDescription": "Reseñas escritas por conductores",
     "rider": "Reseñas de Pasajeros",
     "driver": "Reseñas de Conductores",
     "from": "De",
@@ -695,7 +728,20 @@
     "phone": "Teléfono",
     "active": "Activo",
     "inactive": "Inactivo",
-    "added": "Agregado"
+    "added": "Agregado",
+    "addBtn": "Agregar Despachador",
+    "searchUser": "Buscar usuario",
+    "searchPlaceholder": "Escribe al menos 2 caracteres",
+    "userSelected": "Usuario seleccionado"
+  },
+  "heatMap": {
+    "title": "Mapa de Calor",
+    "description": "Visualiza la densidad de viajes por zona",
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "critical": "Crítica",
+    "rides": "Viajes"
   },
   "fleetManagers": {
     "title": "Flotillas",
@@ -980,6 +1026,69 @@
     "reject": "Rechazar",
     "noPending": "No hay vehículos pendientes de aprobación",
     "approveConfirm": "¿Aprobar este vehículo?",
-    "rejectConfirm": "¿Rechazar este vehículo?"
+    "rejectConfirm": "¿Rechazar este vehículo?",
+    "approvedToast": "Vehículo aprobado correctamente",
+    "rejectedToast": "Vehículo rechazado"
+  },
+  "driversVerified": {
+    "title": "Conductores Verificados",
+    "description": "Lista de conductores aprobados",
+    "driver": "Conductor",
+    "phone": "Teléfono",
+    "vehicle": "Vehículo",
+    "online": "Estado",
+    "documents": "Documentos",
+    "noDrivers": "No hay conductores verificados",
+    "noName": "Sin nombre",
+    "online_s": "En línea",
+    "offline": "Desconectado",
+    "verified": "Verificado",
+    "search": "Buscar conductor..."
+  },
+  "driversUnverified": {
+    "title": "Conductores No Verificados",
+    "description": "Conductores pendientes de aprobación",
+    "driver": "Conductor",
+    "phone": "Teléfono",
+    "status": "Estado",
+    "documents": "Documentos",
+    "noDrivers": "No hay conductores pendientes",
+    "noName": "Sin nombre",
+    "noDocuments": "Sin documentos",
+    "documentsCount": "documentos",
+    "pending": "pendientes",
+    "search": "Buscar conductor..."
+  },
+  "driverAdd": {
+    "title": "Agregar Conductor",
+    "description": "Crear una nueva cuenta de conductor",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Ej: Juan Pérez",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 6 caracteres",
+    "passwordHint": "El conductor puede cambiar su contraseña después",
+    "create": "Crear Conductor",
+    "creating": "Creando...",
+    "successTitle": "Conductor creado",
+    "successMessage": "Redirigiendo a la lista de no verificados...",
+    "nameRequired": "El nombre es obligatorio",
+    "phoneRequired": "El teléfono es obligatorio",
+    "emailRequired": "El correo es obligatorio",
+    "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+    "signupFailed": "Error al crear el usuario"
+  },
+  "driverDocuments": {
+    "title": "Documentos de Conductores",
+    "description": "Revisar y aprobar documentos de conductores",
+    "driver": "Conductor",
+    "phone": "Teléfono",
+    "type": "Tipo",
+    "status": "Estado",
+    "date": "Fecha",
+    "noDocuments": "No hay documentos pendientes",
+    "approvedToast": "Documento aprobado",
+    "rejectedToast": "Documento rechazado"
   }
 }

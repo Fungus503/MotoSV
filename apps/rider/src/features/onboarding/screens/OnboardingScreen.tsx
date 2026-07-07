@@ -1,7 +1,12 @@
 import { useState } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text } from 'react-native'
+import { Image } from 'expo-image'
 import { router } from 'expo-router'
 import { Button } from '@motosv/ui'
+
+function handleSkip() {
+  router.replace('/(tabs)/home')
+}
 
 const slides = [
   {
@@ -31,10 +36,6 @@ export function OnboardingScreen() {
     }
   }
 
-  function handleSkip() {
-    router.replace('/(tabs)/home')
-  }
-
   return (
     <View className="flex-1 bg-surface">
       <View className="flex-1 items-center justify-center px-8">
@@ -50,9 +51,9 @@ export function OnboardingScreen() {
       </View>
 
       <View className="flex-row justify-center mb-8">
-        {slides.map((_, i) => (
+        {slides.map((slide, i) => (
           <View
-            key={i}
+            key={slide.title}
             className={`w-2 h-2 rounded-full mx-1 ${i === slideIndex ? 'bg-primary w-6' : 'bg-outlineVariant'}`}
           />
         ))}

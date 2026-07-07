@@ -4,12 +4,12 @@ import { router } from 'expo-router'
 import { GlassCard, Button } from '@motosv/ui'
 import { OSMMap } from '../../../../src/lib/OSMMap'
 
+function handleComplete() {
+  router.replace('/(tabs)/home')
+}
+
 export function NavigationScreen() {
   const insets = useSafeAreaInsets()
-
-  function handleComplete() {
-    router.replace('/(tabs)/home')
-  }
 
   return (
     <View className="flex-1 bg-surface">

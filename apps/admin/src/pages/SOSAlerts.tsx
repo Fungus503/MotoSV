@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -7,6 +8,8 @@ import { handleError } from '../lib/errors'
 export function SOSPage() {
   const { t, i18n } = useTranslation()
   const qc = useQueryClient()
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
   const { data: alerts, isLoading } = useQuery({
     queryKey: ['admin-sos'],
     queryFn: async () => {
@@ -18,6 +21,8 @@ export function SOSPage() {
     },
     refetchInterval: 15000,
   })
+
+  const activeCount = (alerts ?? []).filter((a: any) => a.status === 'active').length
 
   const resolveMutation = useMutation({
     mutationFn: async ({ id, resolved }: { id: string; resolved: boolean }) => {
@@ -32,8 +37,25 @@ export function SOSPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-2xl font-bold text-gray-900">{t('sos.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('sos.description')}</p></div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{t('sos.title')}</h1>
+          <p className="text-sm text-gray-400 mt-0.5">{t('sos.description')}</p>
+        </div>
+        {activeCount > 0 && (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-700 rounded-lg text-sm font-medium">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            {activeCount} {t('sos.activeAlerts')}
+          </div>
+        )}
       </div>
+
+      {toast && (
+        <div className={`mb-4 px-4 py-3 rounded-lg text-sm ${toast.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+          {toast.message}
+          <button type="button" onClick={() => setToast(null)} className="float-right font-bold">&times;</button>
+        </div>
+      )}
+
       <DataTable
         columns={[
           { key: 'reporter', label: t('sos.reporter'), render: (a: any) => (
@@ -51,9 +73,9 @@ export function SOSPage() {
           { key: 'created_at', label: t('sos.date'), sortable: true, render: (a: any) => new Date(a.created_at).toLocaleString(i18n.language) },
           { key: 'actions', label: '', width: 'w-32', render: (a: any) => a.status === 'active' ? (
             <div className="flex gap-1">
-              <button onClick={async (e) => { e.stopPropagation(); try { await resolveMutation.mutateAsync({ id: a.id, resolved: true }) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { await resolveMutation.mutateAsync({ id: a.id, resolved: true }); setToast({ message: t('sos.resolvedToast'), type: 'success' }) } catch (e) { setToast({ message: handleError(e), type: 'error' }) } }}
                 className="px-2 py-1 text-xs bg-green-50 text-green-600 rounded hover:bg-green-100">{t('sos.resolve')}</button>
-              <button onClick={async (e) => { e.stopPropagation(); try { await resolveMutation.mutateAsync({ id: a.id, resolved: false }) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { await resolveMutation.mutateAsync({ id: a.id, resolved: false }); setToast({ message: t('sos.falseToast'), type: 'success' }) } catch (e) { setToast({ message: handleError(e), type: 'error' }) } }}
                 className="px-2 py-1 text-xs bg-gray-50 text-gray-600 rounded hover:bg-gray-100">{t('sos.false')}</button>
             </div>
           ) : null },
@@ -65,3 +87,4 @@ export function SOSPage() {
     </div>
   )
 }
+

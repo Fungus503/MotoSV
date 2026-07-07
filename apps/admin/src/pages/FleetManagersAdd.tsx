@@ -31,13 +31,13 @@ export function FleetManagersAddPage() {
       <div className="max-w-lg">
         <form onSubmit={handleSave} className="space-y-3 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2"><label className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.name')}</label><input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+            <div className="col-span-2"><label htmlFor="fma-name" className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.name')}</label><input id="fma-name" value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.email')}</label><input type="email" value={form.company_email} onChange={(e) => setForm({ ...form, company_email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.phone')}</label><input value={form.company_phone} onChange={(e) => setForm({ ...form, company_phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+            <div><label htmlFor="fma-email" className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.email')}</label><input id="fma-email" type="email" value={form.company_email} onChange={(e) => setForm({ ...form, company_email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+            <div><label htmlFor="fma-phone" className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.phone')}</label><input id="fma-phone" value={form.company_phone} onChange={(e) => setForm({ ...form, company_phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
           </div>
-          <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.taxId')}</label><input value={form.tax_id} onChange={(e) => setForm({ ...form, tax_id: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+          <div><label htmlFor="fma-tax" className="block text-sm font-medium text-gray-700 mb-1">{t('fleetManagers.taxId')}</label><input id="fma-tax" value={form.tax_id} onChange={(e) => setForm({ ...form, tax_id: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} className="rounded border-gray-300" /> {t('common.active')}</label>
           <div className="flex gap-3 pt-2">
             <button type="submit" disabled={createMutation.isPending} className="flex-1 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark disabled:opacity-50">{t('common.create')}</button>

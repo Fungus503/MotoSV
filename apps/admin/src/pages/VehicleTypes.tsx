@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Plus, Trash2, Pencil } from 'lucide-react'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useVehicleTypes, useCreateVehicleType, useDeleteVehicleType, useUpdateVehicleType } from '../lib/queries'
 import { handleError } from '../lib/errors'
 
@@ -39,7 +39,7 @@ export function VehicleTypesPage() {
           <h1 className="text-2xl font-bold text-gray-900">{t('vehicleTypes.title')}</h1>
           <p className="text-sm text-gray-400 mt-0.5">{t('vehicleTypes.description')}</p>
         </div>
-        <button onClick={() => { setEditingType(null); setForm({ name: '', slug: '', description: '', icon: '', capacity: 2, is_active: true }); setShowForm(true) }}
+        <button type="button" onClick={() => { setEditingType(null); setForm({ name: '', slug: '', description: '', icon: '', capacity: 2, is_active: true }); setShowForm(true) }}
           className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
           <Plus size={16} /> {t('common.add')}
         </button>
@@ -54,8 +54,8 @@ export function VehicleTypesPage() {
           { key: 'is_active', label: t('vehicleTypes.status'), render: (v: any) => <span className={`text-sm ${v.is_active ? 'text-green-600' : 'text-red-500'}`}>{v.is_active ? t('vehicleTypes.active') : t('vehicleTypes.inactive')}</span> },
           { key: 'actions', label: '', width: 'w-24', render: (v: any) => (
             <div className="flex items-center gap-1">
-              <button onClick={(e) => { e.stopPropagation(); handleEdit(v) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Pencil size={14} /></button>
-              <button onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteType.mutateAsync(v.id) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); handleEdit(v) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Pencil size={14} /></button>
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteType.mutateAsync(v.id) } catch (e) { alert(handleError(e)) } }}
                 className="p-1.5 text-red-600 hover:bg-red-50 rounded"><Trash2 size={14} /></button>
             </div>
           )},
@@ -65,18 +65,18 @@ export function VehicleTypesPage() {
         searchable
       />
       {showForm && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowForm(false) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{editingType ? t('common.edit') : t('common.add')} {t('vehicleTypes.title')}</h2>
             <form onSubmit={handleSave} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.name')}</label>
-                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.slug')}</label>
-                <input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.icon')}</label>
-                <input value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.capacityLabel')}</label>
-                <input type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+              <div><label htmlFor="vt-name" className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.name')}</label>
+                <input id="vt-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="vt-slug" className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.slug')}</label>
+                <input id="vt-slug" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="vt-icon" className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.icon')}</label>
+                <input id="vt-icon" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+              <div><label htmlFor="vt-capacity" className="block text-sm font-medium text-gray-700 mb-1">{t('vehicleTypes.capacityLabel')}</label>
+                <input id="vt-capacity" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} className="rounded border-gray-300" /> {t('common.active')}</label>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowForm(false); setEditingType(null) }} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
@@ -89,3 +89,5 @@ export function VehicleTypesPage() {
     </div>
   )
 }
+
+

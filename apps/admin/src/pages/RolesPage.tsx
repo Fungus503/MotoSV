@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
@@ -36,7 +36,7 @@ export function RolesPage() {
           <DataTable
             columns={[
               { key: 'name', label: t('roles.role'), sortable: true, render: (r: any) => (
-                <button onClick={() => setSelectedRole(r)} className={`font-medium text-left w-full ${selectedRole?.id === r.id ? 'text-[#199675]' : 'text-gray-900'}`}>{r.name}</button>
+                <button type="button" onClick={() => setSelectedRole(r)} className={`font-medium text-left w-full ${selectedRole?.id === r.id ? 'text-[#199675]' : 'text-gray-900'}`}>{r.name}</button>
               )},
               { key: 'description', label: t('roles.descriptionLabel') },
               { key: 'is_active', label: '', render: (r: any) => <span className={r.is_active ? 'text-green-600' : 'text-red-500'}>{r.is_active ? t('roles.active') : t('roles.inactive')}</span> },
@@ -74,3 +74,4 @@ export function RolesPage() {
     </div>
   )
 }
+

@@ -5,6 +5,13 @@ import { Button, GlassCard, Loading } from '@motosv/ui'
 import { useActiveRide, useSession } from '@motosv/api'
 import { OSMMap } from '../../../src/lib/OSMMap'
 
+const statusLabels: Record<string, string> = {
+  pending: 'Buscando conductor...',
+  assigned: 'Conductor en camino',
+  driver_arrived: 'Conductor llegó',
+  in_progress: 'Viaje en curso',
+}
+
 export function TrackingScreen() {
   const insets = useSafeAreaInsets()
   const { data: session } = useSession()
@@ -19,13 +26,6 @@ export function TrackingScreen() {
         <Button title="Volver al inicio" onPress={() => {}} className="mt-4" />
       </View>
     )
-  }
-
-  const statusLabels: Record<string, string> = {
-    pending: 'Buscando conductor...',
-    assigned: 'Conductor en camino',
-    driver_arrived: 'Conductor llegó',
-    in_progress: 'Viaje en curso',
   }
 
   return (

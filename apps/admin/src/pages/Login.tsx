@@ -45,14 +45,14 @@ export function LoginPage() {
           </div>
           <form onSubmit={handleLogin} className="bg-white rounded-xl border border-gray-200 p-6 space-y-4 shadow-sm">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">{t('login.email')}</label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">{t('login.email')}</label>
+              <input id="login-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder={t('auth.emailPlaceholder')} required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">{t('login.password')}</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+              <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">{t('login.password')}</label>
+              <input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="••••••••" required />
             </div>

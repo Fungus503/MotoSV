@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Edit2, Plus } from 'lucide-react'
-import { DataTable, StatusBadge } from '../components'
+import { Edit2, Plus, Trash2 } from 'lucide-react'
+import { DataTable } from '../components/DataTable'
+import { StatusBadge } from '../components/StatusBadge'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
@@ -41,6 +42,35 @@ export function UsersPage() {
     setShowForm(true)
   }
 
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  const deleteUser = useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await supabase.auth.getSession()
+      const sessionUser = data.session?.user
+      if (sessionUser?.id === id) throw new Error('cannotDeleteSelf')
+
+      const res = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${data.session?.access_token ?? ''}`, 'Content-Type': 'application/json' },
+      })
+      if (!res.ok) {
+        const body = await res.json()
+        throw new Error(body.error ?? 'Failed to delete user')
+      }
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-users'] }),
+  })
+
+  async function handleDelete(userId: string) {
+    const confirmed = confirm(t('users.confirmDelete'))
+    if (!confirmed) return
+    setDeletingId(userId)
+    try { await deleteUser.mutateAsync(userId); alert(t('users.deleted')) }
+    catch (e) { alert(t('users.deleteError') + ': ' + (e as Error).message) }
+    finally { setDeletingId(null) }
+  }
+
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     setErrorMsg('')
@@ -65,7 +95,6 @@ export function UsersPage() {
         const { error: profileError } = await supabase.from('profiles').update({
           full_name: form.full_name || null,
           phone: form.phone || null,
-          role: form.role,
         }).eq('id', authData.user.id)
         if (profileError) throw profileError
       }
@@ -82,7 +111,7 @@ export function UsersPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-gray-900">{t('users.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('users.description')}</p></div>
-        <button onClick={openCreate} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
+        <button type="button" onClick={openCreate} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
           <Plus size={16} /> {t('users.addBtn')}
         </button>
       </div>
@@ -94,8 +123,12 @@ export function UsersPage() {
           { key: 'role', label: t('users.role'), sortable: true, render: (r: any) => <StatusBadge status={r.role === 'admin' ? 'approved' : r.role === 'driver' ? 'assigned' : 'pending'} /> },
           { key: 'is_verified', label: t('users.verified'), render: (r: any) => <span className={`text-sm ${r.is_verified ? 'text-green-600' : 'text-gray-400'}`}>{r.is_verified ? t('common.yes') : t('common.no')}</span> },
           { key: 'created_at', label: t('users.createdAt'), sortable: true, render: (r: any) => new Date(r.created_at).toLocaleDateString(i18n.language) },
-          { key: '', label: '', width: 'w-16', render: (r: any) => (
-            <button onClick={(e) => { e.stopPropagation(); openEdit(r) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Edit2 size={14} /></button>
+          { key: '', label: '', width: 'w-24', render: (r: any) => (
+            <div className="flex gap-1">
+              <button type="button" onClick={(e) => { e.stopPropagation(); openEdit(r) }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded"><Edit2 size={14} /></button>
+              <button type="button" onClick={(e) => { e.stopPropagation(); handleDelete(r.id) }} disabled={deletingId === r.id}
+                className="p-1.5 text-red-600 hover:bg-red-50 rounded disabled:opacity-50"><Trash2 size={14} /></button>
+            </div>
           )},
         ]}
         data={users ?? []}
@@ -103,24 +136,24 @@ export function UsersPage() {
         searchable
       />
       {showForm && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowForm(false)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowForm(false) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{editing ? t('users.editTitle') : t('users.addTitle')}</h2>
             <form onSubmit={handleSave} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('users.name')}</label>
-                <input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('users.phone')}</label>
-                <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+              <div><label htmlFor="user-name" className="block text-sm font-medium text-gray-700 mb-1">{t('users.name')}</label>
+                <input id="user-name" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+              <div><label htmlFor="user-phone" className="block text-sm font-medium text-gray-700 mb-1">{t('users.phone')}</label>
+                <input id="user-phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               {!editing && (
                 <>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('users.email')} *</label>
-                    <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('users.passwordLabel')}</label>
-                    <input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="••••••••" className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                  <div><label htmlFor="user-email" className="block text-sm font-medium text-gray-700 mb-1">{t('users.email')} *</label>
+                    <input id="user-email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                  <div><label htmlFor="user-password" className="block text-sm font-medium text-gray-700 mb-1">{t('users.passwordLabel')}</label>
+                    <input id="user-password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="••••••••" className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
                 </>
               )}
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('users.role')}</label>
-                <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+              <div><label htmlFor="user-role" className="block text-sm font-medium text-gray-700 mb-1">{t('users.role')}</label>
+                <select id="user-role" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
                   <option value="rider">{t('users.rider')}</option><option value="driver">{t('users.driver')}</option><option value="admin">{t('users.admin')}</option>
                 </select></div>
               {errorMsg && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{errorMsg}</p>}
@@ -137,3 +170,5 @@ export function UsersPage() {
     </div>
   )
 }
+
+

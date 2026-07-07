@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
@@ -36,7 +36,7 @@ export function AppSettingsPage() {
           { key: 'type', label: t('settings.type'), render: (s: any) => <span className="text-xs text-gray-400 uppercase">{s.type}</span> },
           { key: 'description', label: t('settings.descriptionLabel'), render: (s: any) => <span className="text-xs text-gray-400">{s.description ?? '—'}</span> },
           { key: '', label: '', width: 'w-24', render: (s: any) => (
-            <button onClick={() => {
+            <button type="button" onClick={() => {
               const v = prompt(t('settings.newValue'), s.value)
               if (v !== null) updateMutation.mutateAsync({ id: s.id, value: v })
             }} className="text-xs text-primary hover:underline">{t('settings.edit')}</button>
@@ -49,3 +49,4 @@ export function AppSettingsPage() {
     </div>
   )
 }
+

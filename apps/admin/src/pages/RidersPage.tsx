@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { DataTable } from '../components'
+import { DataTable } from '../components/DataTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { handleError } from '../lib/errors'
@@ -26,12 +26,13 @@ export function RidersPage() {
     mutationFn: async (vals: { email: string; password: string; full_name: string; phone: string }) => {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: vals.email, password: vals.password,
+        options: { data: { role: 'rider', full_name: vals.full_name, phone: vals.phone } },
       })
       if (authError) throw authError
       if (!authData.user) throw new Error('No user returned')
-      const { error } = await supabase.from('profiles').insert({
-        id: authData.user.id, full_name: vals.full_name, phone: vals.phone, email: vals.email, role: 'rider', is_verified: true,
-      })
+      const { error } = await supabase.from('profiles').update({
+        is_verified: true,
+      }).eq('id', authData.user.id)
       if (error) throw error
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-riders'] }),
@@ -101,7 +102,7 @@ export function RidersPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-2xl font-bold text-gray-900">{t('riders.title')}</h1><p className="text-sm text-gray-400 mt-0.5">{t('riders.description')}</p></div>
-        <button onClick={() => setShowAdd(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('riders.addBtn')}</button>
+        <button type="button" onClick={() => setShowAdd(true)} className="flex items-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark"><Plus size={16} /> {t('riders.addBtn')}</button>
       </div>
       <DataTable
         columns={[
@@ -119,18 +120,18 @@ export function RidersPage() {
           { key: 'created_at', label: t('riders.registered'), sortable: true, render: (r: any) => new Date(r.created_at).toLocaleDateString(i18n.language) },
           { key: '', label: '', width: 'w-36', render: (r: any) => (
             <div className="flex items-center gap-1">
-              <button onClick={(e) => { e.stopPropagation(); setShowEdit(r); setEditForm({ full_name: r.full_name ?? '', phone: r.phone ?? '', email: r.email ?? '' }) }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); setShowEdit(r); setEditForm({ full_name: r.full_name ?? '', phone: r.phone ?? '', email: r.email ?? '' }) }}
                 className="p-1.5 text-blue-600 hover:bg-blue-50 rounded" title={t('riders.editTitle')}><Pencil size={14} /></button>
-              <button onClick={async (e) => { e.stopPropagation(); try { await toggleBlockMutation.mutateAsync({ id: r.id, is_blocked: !r.is_blocked }) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { await toggleBlockMutation.mutateAsync({ id: r.id, is_blocked: !r.is_blocked }) } catch (e) { alert(handleError(e)) } }}
                 className={`p-1.5 rounded ${r.is_blocked ? 'text-green-600 hover:bg-green-50' : 'text-red-600 hover:bg-red-50'}`}
                 title={r.is_blocked ? t('riders.unblock') : t('riders.block')}>
                 {r.is_blocked ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
               </button>
-              <button onClick={(e) => { e.stopPropagation(); setShowSanction(r); setSanctionForm({ type: 'warning', reason: '', duration_days: 0 }) }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); setShowSanction(r); setSanctionForm({ type: 'warning', reason: '', duration_days: 0 }) }}
                 className="p-1.5 text-orange-600 hover:bg-orange-50 rounded" title={t('riders.sanction')}><Gavel size={14} /></button>
-              <button onClick={(e) => { e.stopPropagation(); setShowRides(r) }}
+              <button type="button" onClick={(e) => { e.stopPropagation(); setShowRides(r) }}
                 className="p-1.5 text-gray-600 hover:bg-gray-50 rounded" title={t('riders.rideHistory')}><Eye size={14} /></button>
-              <button onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }}
+              <button type="button" onClick={async (e) => { e.stopPropagation(); try { if (confirm(t('common.confirmDelete'))) await deleteMutation.mutateAsync(r.id) } catch (e) { alert(handleError(e)) } }}
                 className="p-1.5 text-red-600 hover:bg-red-50 rounded" title={t('common.delete')}><Trash2 size={14} /></button>
             </div>
           )},
@@ -141,19 +142,19 @@ export function RidersPage() {
       />
 
       {showAdd && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowAdd(false)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowAdd(false)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowAdd(false) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{t('riders.addTitle')}</h2>
             <form onSubmit={async (e) => {
               e.preventDefault(); await createMutation.mutateAsync(addForm); setShowAdd(false)
               setAddForm({ full_name: '', email: '', phone: '', password: '' })
             }} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.name')}</label><input value={addForm.full_name} onChange={(e) => setAddForm({ ...addForm, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="rider-name" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.name')}</label><input id="rider-name" value={addForm.full_name} onChange={(e) => setAddForm({ ...addForm, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.email')}</label><input type="email" value={addForm.email} onChange={(e) => setAddForm({ ...addForm, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.phone')}</label><input value={addForm.phone} onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="rider-email" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.email')}</label><input id="rider-email" type="email" value={addForm.email} onChange={(e) => setAddForm({ ...addForm, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                <div><label htmlFor="rider-phone" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.phone')}</label><input id="rider-phone" value={addForm.phone} onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               </div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.password')}</label><input type="password" value={addForm.password} onChange={(e) => setAddForm({ ...addForm, password: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="rider-password" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.password')}</label><input id="rider-password" type="password" value={addForm.password} onChange={(e) => setAddForm({ ...addForm, password: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowAdd(false)} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
                 <button type="submit" disabled={createMutation.isPending} className="flex-1 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-dark disabled:opacity-50">{t('common.create')}</button>
@@ -164,16 +165,16 @@ export function RidersPage() {
       )}
 
       {showEdit && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowEdit(null)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowEdit(null)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowEdit(null) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{t('riders.editTitle')}</h2>
             <form onSubmit={async (e) => {
               e.preventDefault(); await updateMutation.mutateAsync({ id: showEdit.id, ...editForm }); setShowEdit(null)
             }} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.name')}</label><input value={editForm.full_name} onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+              <div><label htmlFor="rider-edit-name" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.name')}</label><input id="rider-edit-name" value={editForm.full_name} onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.email')}</label><input type="email" value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.phone')}</label><input value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="rider-edit-email" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.email')}</label><input id="rider-edit-email" type="email" value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required /></div>
+                <div><label htmlFor="rider-edit-phone" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.phone')}</label><input id="rider-edit-phone" value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowEdit(null)} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
@@ -185,21 +186,21 @@ export function RidersPage() {
       )}
 
       {showSanction && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowSanction(null)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setShowSanction(null)} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowSanction(null) }}>
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900 mb-4">{t('riders.sanctionTitle')}: {showSanction.full_name}</h2>
             <form onSubmit={async (e) => {
               e.preventDefault(); await sanctionMutation.mutateAsync({ rider_id: showSanction.id, ...sanctionForm }); setShowSanction(null)
             }} className="space-y-3">
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionType')}</label>
-                <select value={sanctionForm.type} onChange={(e) => setSanctionForm({ ...sanctionForm, type: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+              <div><label htmlFor="rider-sanction-type" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionType')}</label>
+                <select id="rider-sanction-type" value={sanctionForm.type} onChange={(e) => setSanctionForm({ ...sanctionForm, type: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
                   <option value="warning">{t('riders.warning')}</option>
                   <option value="suspension">{t('riders.suspension')}</option>
                   <option value="permanent_ban">{t('riders.permanentBan')}</option>
                 </select></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionReason')}</label><textarea value={sanctionForm.reason} onChange={(e) => setSanctionForm({ ...sanctionForm, reason: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" rows={3} required /></div>
+              <div><label htmlFor="rider-sanction-reason" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionReason')}</label><textarea id="rider-sanction-reason" value={sanctionForm.reason} onChange={(e) => setSanctionForm({ ...sanctionForm, reason: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" rows={3} required /></div>
               {sanctionForm.type !== 'permanent_ban' && (
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionDuration')}</label><input type="number" value={sanctionForm.duration_days} onChange={(e) => setSanctionForm({ ...sanctionForm, duration_days: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
+                <div><label htmlFor="rider-sanction-duration" className="block text-sm font-medium text-gray-700 mb-1">{t('riders.sanctionDuration')}</label><input id="rider-sanction-duration" type="number" value={sanctionForm.duration_days} onChange={(e) => setSanctionForm({ ...sanctionForm, duration_days: +e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" /></div>
               )}
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowSanction(null)} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">{t('common.cancel')}</button>
@@ -233,11 +234,11 @@ function RiderRidesModal({ rider, onClose, t, i18n }: { rider: any; onClose: () 
   })
 
   return (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={onClose} role="presentation" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClose() }}>
       <div className="bg-white rounded-xl p-6 w-full max-w-2xl mx-4 shadow-xl max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900">{t('riders.rideHistory')}: {rider.full_name}</h2>
-          <button onClick={onClose} className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400">✕</button>
+          <button type="button" onClick={onClose} className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400" aria-label={t('common.close')}>✕</button>
         </div>
         {rides && rides.length > 0 ? (
           <table className="w-full">
@@ -265,3 +266,5 @@ function RiderRidesModal({ rider, onClose, t, i18n }: { rider: any; onClose: () 
     </div>
   )
 }
+
+
